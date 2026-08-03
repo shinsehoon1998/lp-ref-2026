@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>위촉 LP 시안 A·B — 디자인 레퍼런스</title>
+<style>
+:root{
+  --paper:#EEF3FB;
+  --card:#FFFFFF;
+  --ink:#141A22;
+  --body:#3A424D;
+  --mute:#7B8593;
+  --brand:#0C4DA2;
+  --accent:#1F5FE0;
+  --notice:#C62828;
+  --line:#DBE3F0;
+  --shadow:0 18px 44px -26px rgba(12,40,90,.5);
+  --container:920px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#0B1017; --card:#141B25; --ink:#EEF3FB; --body:#AEBACA; --mute:#788495;
+    --brand:#7FAEF5; --accent:#9CC2FF; --notice:#FF8A80; --line:#243043;
+    --shadow:0 18px 44px -26px rgba(0,0,0,.85);
+  }
+}
+:root[data-theme="light"]{
+  --paper:#EEF3FB; --card:#FFFFFF; --ink:#141A22; --body:#3A424D; --mute:#7B8593;
+  --brand:#0C4DA2; --accent:#1F5FE0; --notice:#C62828; --line:#DBE3F0;
+  --shadow:0 18px 44px -26px rgba(12,40,90,.5);
+}
+:root[data-theme="dark"]{
+  --paper:#0B1017; --card:#141B25; --ink:#EEF3FB; --body:#AEBACA; --mute:#788495;
+  --brand:#7FAEF5; --accent:#9CC2FF; --notice:#FF8A80; --line:#243043;
+  --shadow:0 18px 44px -26px rgba(0,0,0,.85);
+}
+
+*{box-sizing:border-box}
+h1,h2,h3,p,dl,dd,figure,ul{margin:0}
+ul{padding:0;list-style:none}
+
+body{
+  background:var(--paper);
+  color:var(--body);
+  font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  font-size:15px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  padding:clamp(1.4rem,1rem + 3vw,4rem) 1.25rem clamp(3rem,2rem + 4vw,6rem);
+}
+.wrap{max-width:var(--container);margin-inline:auto;display:grid;gap:clamp(2rem,1.4rem + 2.4vw,3.4rem)}
+
+/* ── 표제 ── */
+.masthead{display:grid;gap:.9rem;padding-bottom:1.6rem;border-bottom:2px solid var(--ink)}
+.kicker{
+  font-size:11.5px;font-weight:800;letter-spacing:.22em;color:var(--brand);
+}
+.masthead h1{
+  font-size:clamp(1.6rem,1.2rem + 2.2vw,2.6rem);
+  line-height:1.24;font-weight:800;color:var(--ink);letter-spacing:-.02em;
+  text-wrap:balance;
+}
+.masthead p{max-width:58ch;color:var(--body)}
+.masthead p b{color:var(--ink);font-weight:700}
+.meta{
+  display:flex;flex-wrap:wrap;gap:.4rem 1.6rem;
+  font-size:12.5px;color:var(--mute);font-variant-numeric:tabular-nums;
+  padding-top:.3rem;
+}
+.meta b{color:var(--body);font-weight:700}
+
+/* ── 시안 카드 ── */
+.decks{display:grid;gap:1.1rem}
+@media (min-width:760px){.decks{grid-template-columns:1fr 1fr}}
+
+.deck{
+  position:relative;overflow:hidden;isolation:isolate;
+  display:grid;gap:.9rem;align-content:start;
+  padding:1.7rem 1.5rem 1.5rem;
+  border:1px solid var(--line);border-radius:14px;
+  background:var(--card);box-shadow:var(--shadow);
+  text-decoration:none;color:inherit;
+  transition:transform 340ms var(--ease),box-shadow 340ms var(--ease),border-color 340ms var(--ease);
+}
+.deck::after{
+  content:attr(data-mark);
+  position:absolute;z-index:-1;right:-.06em;bottom:-.34em;
+  font-size:11rem;font-weight:900;line-height:.7;letter-spacing:-.05em;
+  color:var(--ink);opacity:.055;pointer-events:none;
+}
+.deck:hover,.deck:focus-visible{
+  transform:translateY(-4px);
+  border-color:var(--brand);
+  box-shadow:0 26px 56px -26px rgba(12,40,90,.58);
+}
+.deck:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+/* B안은 금액을 말하는 안이라 잉크를 채운다 — 색이 곧 구분값 */
+.deck--ink{background:var(--brand);border-color:var(--brand)}
+.deck--ink::after{color:#FFFFFF;opacity:.12}
+.deck--ink .axis{color:#BFD8FF}
+.deck--ink h2{color:#FFFFFF}
+.deck--ink h2 span{color:#A8C8F5}
+.deck--ink .spec dt{color:#9FC4FA}
+.deck--ink .spec dd{color:#E4EEFC}
+.deck--ink .open{color:#FFFFFF;border-color:rgba(255,255,255,.5)}
+.deck--ink:hover,.deck--ink:focus-visible{border-color:#FFFFFF}
+@media (prefers-color-scheme:dark){
+  .deck--ink{background:#123A6E;border-color:#1E4E8C}
+  .deck--ink .axis{color:#9CC2FF}
+  .deck--ink .spec dt{color:#8FB4E8}
+}
+:root[data-theme="dark"] .deck--ink{background:#123A6E;border-color:#1E4E8C}
+:root[data-theme="dark"] .deck--ink .axis{color:#9CC2FF}
+:root[data-theme="dark"] .deck--ink .spec dt{color:#8FB4E8}
+:root[data-theme="light"] .deck--ink{background:#0C4DA2;border-color:#0C4DA2}
+:root[data-theme="light"] .deck--ink .axis{color:#BFD8FF}
+:root[data-theme="light"] .deck--ink .spec dt{color:#9FC4FA}
+
+.axis{font-size:11.5px;font-weight:800;letter-spacing:.16em;color:var(--brand)}
+.deck h2{
+  font-size:clamp(1.25rem,1.05rem + 1vw,1.6rem);font-weight:800;color:var(--ink);
+  line-height:1.3;letter-spacing:-.015em;
+}
+.deck h2 span{display:block;font-size:.72em;font-weight:600;color:var(--mute);margin-top:.25rem}
+
+.spec{display:grid;gap:.5rem;margin-top:.2rem;font-size:13.5px}
+.spec div{display:grid;grid-template-columns:4.6rem 1fr;gap:.7rem;align-items:baseline}
+.spec dt{color:var(--mute);font-weight:700;font-size:12px;letter-spacing:.02em}
+.spec dd{color:var(--body)}
+
+.open{
+  margin-top:.6rem;justify-self:start;
+  display:inline-flex;align-items:center;gap:.45rem;
+  padding:.5rem .95rem;border:1.5px solid var(--brand);border-radius:999px;
+  font-size:13px;font-weight:800;color:var(--brand);
+  transition:gap 260ms var(--ease);
+}
+.deck:hover .open{gap:.85rem}
+
+/* ── 안내 블록 ── */
+.panel{
+  padding:1.4rem 1.5rem;border:1px solid var(--line);border-radius:14px;background:var(--card);
+  display:grid;gap:1.1rem;
+}
+.panel h3{
+  font-size:12px;font-weight:800;letter-spacing:.16em;color:var(--brand);
+}
+.howto{display:grid;gap:.9rem}
+@media (min-width:700px){.howto{grid-template-columns:repeat(3,1fr);gap:1.6rem}}
+.howto li{display:grid;gap:.2rem;font-size:13.5px}
+.howto b{color:var(--ink);font-weight:800;font-size:14px}
+.howto kbd{
+  display:inline-block;padding:.05rem .4rem;margin-right:.25rem;
+  border:1px solid var(--line);border-radius:5px;background:var(--paper);
+  font-family:inherit;font-size:12px;font-weight:700;color:var(--body);
+}
+
+.caution{
+  border-left:3px solid var(--notice);
+  padding:.15rem 0 .15rem 1rem;
+  display:grid;gap:.6rem;font-size:13.5px;
+}
+.caution b{color:var(--notice);font-weight:800}
+
+footer{
+  padding-top:1.4rem;border-top:1px solid var(--line);
+  font-size:12px;color:var(--mute);line-height:1.75;
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition-duration:.01ms !important}
+  .deck:hover,.deck:focus-visible{transform:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="kicker">삼성화재금융서비스 · 점검본부</p>
+    <h1>보험설계사 위촉 랜딩페이지<br>A·B 시안 레퍼런스</h1>
+    <p>디자이너 전달용 인터랙티브 프로토타입입니다. 두 안은 <b>동일한 디자인 시스템</b>(색·타이포·간격·컴포넌트)을 씁니다. 차이는 <b>설득 축과 섹션 구조</b>뿐이며, 이는 A/B 테스트에서 "디자인이 예뻐서 이겼다"는 변수를 제거하려는 의도된 통제입니다.</p>
+    <p class="meta">
+      <span>최종 갱신 <b>2026-08-03</b></span>
+      <span>대상 폭 <b>390 / 768 / 1440</b></span>
+      <span>구현 서체 <b>Pretendard</b></span>
+    </p>
+  </header>
+
+  <section class="decks" aria-label="시안 목록">
+
+    <a class="deck" href="plan-a.html" data-mark="A">
+      <p class="axis">이해축</p>
+      <h2>A안 — 이해 중심<span>금액 언급 0건</span></h2>
+      <dl class="spec">
+        <div><dt>설득 논리</dt><dd>"뭘 하는 건데?"를 세 섹션으로 두껍게 풀어 불신을 흡수</dd></div>
+        <div><dt>섹션</dt><dd>11개 · 하루 스케치 타임라인 포함</dd></div>
+        <div><dt>리드폼</dt><dd>본문 인라인 (흰 카드)</dd></div>
+        <div><dt>심의</dt><dd>채용광고 — 사전심의 면제</dd></div>
+      </dl>
+      <span class="open">열어보기 →</span>
+    </a>
+
+    <a class="deck deck--ink" href="plan-b.html" data-mark="B">
+      <p class="axis">금액축</p>
+      <h2>B안 — 금액 중심<span>히어로에 수치 노출</span></h2>
+      <dl class="spec">
+        <div><dt>설득 논리</dt><dd>메리츠·KB형 PASONA 구조를 차용해 숫자로 먼저 세움</dd></div>
+        <div><dt>섹션</dt><dd>10개 · 4단계 프로세스 + 후기</dd></div>
+        <div><dt>리드폼</dt><dd>CTA → 모달 팝업</dd></div>
+        <div><dt>심의</dt><dd>업무광고 — 준법 사전심의 필요</dd></div>
+      </dl>
+      <span class="open">열어보기 →</span>
+    </a>
+
+  </section>
+
+  <section class="panel" aria-labelledby="howto-h">
+    <h3 id="howto-h">뷰어 사용법</h3>
+    <ul class="howto">
+      <li><b>데스크톱 / 모바일 390</b><span>상단 바에서 전환합니다. 실제 브레이크포인트가 그대로 적용됩니다.</span></li>
+      <li><b><kbd>섹션 주석</kbd> 토글</b><span>각 섹션의 의도와 설득 역할이 주석으로 뜹니다. 빨간 주석은 규제 리스크 표시입니다.</span></li>
+      <li><b><kbd>✎ 편집</kbd> 토글</b><span>문구를 브라우저에서 바로 고칠 수 있습니다. 수정분은 내보내기로 JSON 추출됩니다.</span></li>
+    </ul>
+  </section>
+
+  <section class="panel" aria-labelledby="caution-h">
+    <h3 id="caution-h">디자이너께 드리는 전제</h3>
+    <div class="caution">
+      <p><b>확정본이 아닙니다.</b> 두 안 모두 준법 사전심의 전 단계입니다. 특히 B안의 금액 수치와 비교 표현은 심의에서 바뀔 가능성이 높으니, 레이아웃이 <b>숫자 자릿수에 종속되지 않게</b> 잡아주세요.</p>
+      <p><b>지금은 시스템 폰트로 렌더됩니다.</b> 실제 구현 서체는 Pretendard이므로 자간과 행간은 실 서체 기준으로 다시 보셔야 합니다.</p>
+      <p><b>구조는 고정, 표현은 열려 있습니다.</b> 섹션 순서와 각 섹션의 설득 역할은 기획 확정 사항입니다. 그 안의 시각 표현은 자유롭게 제안해 주세요.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>내부 검토용 레퍼런스입니다. 검색엔진 색인은 차단해 두었으나 링크를 아는 사람은 접근할 수 있으니 외부 공유는 삼가 주세요.</p>
+  </footer>
+
+</div>
+</body>
+</html>
