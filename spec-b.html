@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>B안 디자인 규격서 — 위촉 LP</title>
+<style>
+:root{
+  --paper:#EEF3FB; --card:#FFFFFF; --ink:#141A22; --body:#3A424D; --mute:#7B8593;
+  --brand:#0C4DA2; --accent:#1F5FE0; --notice:#C62828; --line:#DBE3F0; --zebra:#F7FAFE;
+  --container:1000px; --ease:cubic-bezier(.16,1,.3,1);
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root{--paper:#0B1017;--card:#141B25;--ink:#EEF3FB;--body:#AEBACA;--mute:#788495;
+    --brand:#7FAEF5;--accent:#9CC2FF;--notice:#FF8A80;--line:#243043;--zebra:#0F1620}
+}
+:root[data-theme="light"]{--paper:#EEF3FB;--card:#FFFFFF;--ink:#141A22;--body:#3A424D;--mute:#7B8593;
+  --brand:#0C4DA2;--accent:#1F5FE0;--notice:#C62828;--line:#DBE3F0;--zebra:#F7FAFE}
+:root[data-theme="dark"]{--paper:#0B1017;--card:#141B25;--ink:#EEF3FB;--body:#AEBACA;--mute:#788495;
+  --brand:#7FAEF5;--accent:#9CC2FF;--notice:#FF8A80;--line:#243043;--zebra:#0F1620}
+
+*{box-sizing:border-box}
+h1,h2,h3,h4,p,dl,dd,figure,ul,table{margin:0}
+ul{padding:0;list-style:none}
+
+body{
+  background:var(--paper);color:var(--body);
+  font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  font-size:15px;line-height:1.72;-webkit-font-smoothing:antialiased;
+  padding:clamp(1.4rem,1rem + 3vw,3.5rem) 1.25rem clamp(3rem,2rem + 4vw,6rem);
+}
+.wrap{max-width:var(--container);margin-inline:auto;display:grid;gap:clamp(2rem,1.4rem + 2vw,3rem)}
+
+.masthead{display:grid;gap:.8rem;padding-bottom:1.5rem;border-bottom:2px solid var(--ink)}
+.kicker{font-size:11.5px;font-weight:800;letter-spacing:.22em;color:var(--brand)}
+.masthead h1{font-size:clamp(1.5rem,1.2rem + 1.8vw,2.3rem);line-height:1.26;font-weight:800;
+  color:var(--ink);letter-spacing:-.02em;text-wrap:balance}
+.masthead p{max-width:60ch}
+.masthead b{color:var(--ink);font-weight:700}
+.crumbs{display:flex;flex-wrap:wrap;gap:.5rem 1.2rem;font-size:12.5px;padding-top:.2rem}
+.crumbs a{color:var(--brand);font-weight:700;text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{border-bottom-color:currentColor}
+
+section{display:grid;gap:1rem}
+section > h2{
+  display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap;
+  font-size:clamp(1.1rem,.95rem + .7vw,1.35rem);font-weight:800;color:var(--ink);letter-spacing:-.015em;
+  padding-bottom:.55rem;border-bottom:1px solid var(--line);
+}
+section > h2 em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--brand);font-weight:700}
+h3{font-size:14.5px;font-weight:800;color:var(--ink);margin-top:.5rem;letter-spacing:-.01em}
+.lede{max-width:70ch;font-size:14px;color:var(--body)}
+
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:560px}
+th,td{padding:.62rem .8rem;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{
+  background:var(--zebra);font-size:11px;font-weight:800;color:var(--mute);
+  letter-spacing:.06em;white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+td.n,th.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+td.k{font-family:var(--mono);font-size:12px;color:var(--brand);white-space:nowrap}
+td strong{color:var(--ink);font-weight:700}
+.sw{display:inline-block;width:13px;height:13px;border-radius:3px;border:1px solid rgba(128,128,128,.35);
+  vertical-align:-2px;margin-right:.4rem}
+
+.cards{display:grid;gap:.8rem}
+@media (min-width:720px){.cards{grid-template-columns:1fr 1fr}}
+.spec{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:1.1rem 1.2rem;display:grid;gap:.5rem;align-content:start}
+.spec h4{font-size:13.5px;font-weight:800;color:var(--ink);display:flex;gap:.5rem;align-items:baseline;flex-wrap:wrap}
+.spec h4 code{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--brand)}
+.spec dl{display:grid;grid-template-columns:6.2rem 1fr;gap:.3rem .8rem;font-size:12.5px}
+.spec dt{color:var(--mute);font-weight:700}
+.spec dd{color:var(--body);font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:12px}
+.spec dd.t{font-family:inherit;font-size:12.5px}
+
+.flags{display:grid;gap:.9rem}
+.flag{
+  border:1px solid var(--line);border-left:3px solid var(--notice);border-radius:0 12px 12px 0;
+  background:var(--card);padding:1rem 1.2rem;display:grid;gap:.35rem;
+}
+.flag b{color:var(--notice);font-weight:800;font-size:13.5px}
+.flag p{font-size:13.5px}
+.flag code,.note code,.lede code{font-family:var(--mono);font-size:12px;color:var(--brand);
+  background:var(--zebra);padding:.05rem .3rem;border-radius:4px}
+
+.note{
+  border:1px dashed var(--line);border-radius:12px;padding:.9rem 1.1rem;
+  font-size:13px;color:var(--body);
+}
+.note b{color:var(--ink);font-weight:800}
+
+footer{padding-top:1.4rem;border-top:1px solid var(--line);font-size:12px;color:var(--mute)}
+footer code{font-family:var(--mono);font-size:11.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <p class="kicker">삼성화재금융서비스 · 점검본부</p>
+  <h1>B안 디자인 규격서</h1>
+  <p>보험설계사 위촉 랜딩페이지 B안(금액축)의 실측 규격입니다. 아래 수치는 프로토타입 소스와 렌더 결과에서 직접 추출한 값이며, <b>화면 폭에 따라 변하는 값은 390 / 768 / 1440 세 지점의 실제 계산값</b>으로 적었습니다.</p>
+  <p class="crumbs">
+    <a href="index.html">← 시안 목록</a>
+    <a href="plan-b.html">B안 프로토타입 열기</a>
+    <a href="plan-a.html">A안 (대조군)</a>
+    <span style="color:var(--mute)">기준일 2026-08-04</span>
+  </p>
+</header>
+
+<section>
+  <h2>그리드와 여백 <em>layout</em></h2>
+  <p class="lede">모든 섹션이 같은 컨테이너와 같은 세로 리듬을 씁니다. 섹션마다 여백을 다르게 주지 않습니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>항목</th><th class="n">390</th><th class="n">768</th><th class="n">1440</th><th>정의</th></tr></thead>
+    <tbody>
+      <tr><td><strong>컨테이너 최대폭</strong></td><td class="n">350</td><td class="n">707</td><td class="n">1080</td><td>1080px 상한, 중앙 정렬</td></tr>
+      <tr><td><strong>섹션 세로 패딩</strong></td><td class="n">67.5</td><td class="n">86.4</td><td class="n">120</td><td><code>clamp(4rem, 3rem + 5vw, 7.5rem)</code></td></tr>
+      <tr><td><strong>섹션 좌우 패딩</strong></td><td class="n">20</td><td class="n">30.7</td><td class="n">40</td><td><code>clamp(1.25rem, 4vw, 2.5rem)</code></td></tr>
+      <tr><td>카드 그리드 gap</td><td class="n">16</td><td class="n">16</td><td class="n">16</td><td>고정</td></tr>
+      <tr><td>고민 카드 gap</td><td class="n">13.6</td><td class="n">13.6</td><td class="n">13.6</td><td>고정</td></tr>
+      <tr><td>고민 카드 열 최대폭</td><td class="n">350</td><td class="n">680</td><td class="n">680</td><td>중앙 정렬, 항상 1열</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note"><b>세로 리듬이 곧 페이지의 호흡입니다.</b> 1440에서 섹션 하나당 위아래 120px씩 비어 있고 섹션이 10개이므로, 여백만 2,400px입니다. 여기를 줄이면 페이지는 짧아지지만 "섹션 하나가 반박 하나를 처리한다"는 구획감이 무너집니다.</p>
+</section>
+
+<section>
+  <h2>타이포 스케일 <em>type</em></h2>
+  <p class="lede">굵기는 400 · 600 · 700 · 800 네 단계만 씁니다. 자간은 큰 글자일수록 좁힙니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>역할</th><th>클래스</th><th class="n">390</th><th class="n">768</th><th class="n">1440</th><th class="n">굵기</th><th class="n">행간</th><th class="n">자간</th></tr></thead>
+    <tbody>
+      <tr><td><strong>히어로 헤드라인</strong></td><td class="k">.hero__h1</td><td class="n">27</td><td class="n">36</td><td class="n">40</td><td class="n">700</td><td class="n">1.40</td><td class="n">−.03em</td></tr>
+      <tr><td><strong>히어로 금액</strong></td><td class="k">.hero__money</td><td class="n">45.9</td><td class="n">65.5</td><td class="n">73.6</td><td class="n">800</td><td class="n">1.05</td><td class="n">−.05em</td></tr>
+      <tr><td>히어로 칩</td><td class="k">.hero__kicker</td><td class="n">14.4</td><td class="n">14.4</td><td class="n">14.4</td><td class="n">700</td><td class="n">–</td><td class="n">−.01em</td></tr>
+      <tr><td>히어로 각주</td><td class="k">.hero__note</td><td class="n">13.1</td><td class="n">13.1</td><td class="n">13.1</td><td class="n">400</td><td class="n">1.70</td><td class="n">0</td></tr>
+      <tr><td><strong>섹션 제목</strong></td><td class="k">.title</td><td class="n">25.4</td><td class="n">33.0</td><td class="n">37.6</td><td class="n">700</td><td class="n">1.38</td><td class="n">−.03em</td></tr>
+      <tr><td>아이브로우</td><td class="k">.eyebrow</td><td class="n">13.1</td><td class="n">13.1</td><td class="n">13.1</td><td class="n">700</td><td class="n">–</td><td class="n">+.02em</td></tr>
+      <tr><td>섹션 부제</td><td class="k">.sub</td><td class="n">15.6</td><td class="n">16.7</td><td class="n">17.3</td><td class="n">400</td><td class="n">1.75</td><td class="n">0</td></tr>
+      <tr><td>본문</td><td class="k">.solve p</td><td class="n">16.8</td><td class="n">16.8</td><td class="n">16.8</td><td class="n">400</td><td class="n">1.80</td><td class="n">−.01em</td></tr>
+      <tr><td><strong>0원 숫자</strong></td><td class="k">.zero</td><td class="n">57.4</td><td class="n">81.9</td><td class="n">88.0</td><td class="n">800</td><td class="n">1.00</td><td class="n">−.05em</td></tr>
+      <tr><td>클로징 헤드라인</td><td class="k">.close__h</td><td class="n">27</td><td class="n">36</td><td class="n">38.4</td><td class="n">700</td><td class="n">1.40</td><td class="n">−.03em</td></tr>
+      <tr><td>클로징 금액</td><td class="k">.close__money</td><td class="n">34.1</td><td class="n">45.4</td><td class="n">51.2</td><td class="n">800</td><td class="n">1.40</td><td class="n">−.05em</td></tr>
+      <tr><td>각주</td><td class="k">.fine</td><td class="n">12.8</td><td class="n">12.8</td><td class="n">12.8</td><td class="n">400</td><td class="n">1.70</td><td class="n">0</td></tr>
+      <tr><td>푸터 고지</td><td class="k">.foot__fine</td><td class="n">12.5</td><td class="n">12.5</td><td class="n">12.5</td><td class="n">400</td><td class="n">1.70</td><td class="n">0</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>색 <em>color</em></h2>
+  <p class="lede">배경은 흰색 → 옅은 파랑 → 브랜드 파랑 세 단계만 씁니다. 이 명도 리듬이 섹션 경계를 만듭니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>토큰</th><th class="n">HEX</th><th>용도</th></tr></thead>
+    <tbody>
+      <tr><td class="k">--brand</td><td class="n"><span class="sw" style="background:#0C4DA2"></span>#0C4DA2</td><td>반전 섹션 배경(S1·S9), 버튼, 강조 숫자</td></tr>
+      <tr><td class="k">--brand-accent</td><td class="n"><span class="sw" style="background:#1F5FE0"></span>#1F5FE0</td><td>아이브로우, 없는 것 숫자, 인용 좌측선</td></tr>
+      <tr><td class="k">--brand-pale</td><td class="n"><span class="sw" style="background:#DCE9FF"></span>#DCE9FF</td><td>도움 카드 배경, Q 뱃지, 후기 수치 칩</td></tr>
+      <tr><td class="k">--surface-1</td><td class="n"><span class="sw" style="background:#FFFFFF"></span>#FFFFFF</td><td>기본 섹션 배경, 카드 면</td></tr>
+      <tr><td class="k">--surface-2</td><td class="n"><span class="sw" style="background:#F2F6FD"></span>#F2F6FD</td><td>틴트 섹션 배경</td></tr>
+      <tr><td class="k">--text-strong</td><td class="n"><span class="sw" style="background:#141A22"></span>#141A22</td><td>제목, 카드 소제목</td></tr>
+      <tr><td class="k">--text-body</td><td class="n"><span class="sw" style="background:#3A424D"></span>#3A424D</td><td>본문</td></tr>
+      <tr><td class="k">--text-mute</td><td class="n"><span class="sw" style="background:#7B8593"></span>#7B8593</td><td>부제, 각주</td></tr>
+      <tr><td class="k">--line</td><td class="n"><span class="sw" style="background:#E4EAF3"></span>#E4EAF3</td><td>카드 테두리, 구분선</td></tr>
+      <tr><td class="k">--notice</td><td class="n"><span class="sw" style="background:#D32F2F"></span>#D32F2F</td><td>입력 오류, 법정 고지</td></tr>
+      <tr><td>푸터 배경</td><td class="n"><span class="sw" style="background:#20262E"></span>#20262E</td><td>본문 #AFB7C2 · 값 #D2D7DE · 라벨 #828C99</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>섹션별 배경 순서</h3>
+  <div class="tw"><table style="min-width:640px">
+    <thead><tr><th>S1</th><th>S2</th><th>S3</th><th>S4</th><th>S5</th><th>S6</th><th>S7</th><th>S8</th><th>S9</th><th>S10</th></tr></thead>
+    <tbody><tr>
+      <td>히어로<br><strong>브랜드</strong></td><td>고민<br>틴트</td><td>해결책<br>흰색</td><td>장점<br>틴트</td><td>리스크<br>흰색</td>
+      <td>4단계<br>틴트</td><td>후기<br>흰색</td><td>FAQ<br>틴트</td><td>클로징<br><strong>브랜드</strong></td><td>푸터<br>먹</td>
+    </tr></tbody>
+  </table></div>
+  <p class="note"><b>브랜드 배경은 두 번만 씁니다.</b> 시작(S1)과 끝(S9)입니다. 중간에 한 번 더 쓰면 이 수미상관이 깨지고, 두 지점이 클라이맥스라는 신호가 사라집니다.</p>
+</section>
+
+<section>
+  <h2>컴포넌트 <em>components</em></h2>
+  <p class="lede">카드 모서리는 전부 18px입니다. 예외는 모달 20px, 버튼 14px, 인물 사진 12px, Q 뱃지 8px 넷뿐입니다.</p>
+
+  <div class="cards">
+
+    <div class="spec">
+      <h4>CTA 버튼 <code>.btn</code></h4>
+      <dl>
+        <dt>높이</dt><dd>60 · 최종 CTA 68 · 플로팅 56</dd>
+        <dt>최대폭</dt><dd>520 · 최종 CTA 560 · 플로팅 100%</dd>
+        <dt>모서리</dt><dd>14px</dd>
+        <dt>좌우 패딩</dt><dd>32px</dd>
+        <dt>글자</dt><dd>16px / 700 / −.02em · 최종 17.3px</dd>
+        <dt>기본</dt><dd>#0C4DA2 바탕 · 흰 글자</dd>
+        <dt>반전 위</dt><dd>흰 바탕 · #0C4DA2 글자</dd>
+        <dt>hover</dt><dd>translateY(−2px) + 그림자</dd>
+        <dt>focus</dt><dd>outline 3px #DCE9FF · offset 3</dd>
+        <dt>disabled</dt><dd>opacity .4 · 모션 없음</dd>
+      </dl>
+    </div>
+
+    <div class="spec">
+      <h4>고민 카드 <code>.pain</code> <span style="color:var(--mute);font-weight:600">S2</span></h4>
+      <dl>
+        <dt>패딩</dt><dd>26.4 × 25.6</dd>
+        <dt>모서리</dt><dd>18px · 테두리 1px #E4EAF3</dd>
+        <dt>배치</dt><dd>1열 고정 · 최대 680 중앙</dd>
+        <dt class="t">비활성</dt><dd>opacity .4 · scale(.985)</dd>
+        <dt class="t">활성</dt><dd>opacity 1 · scale(1) · 테두리 #0C4DA2<br>그림자 0 10px 30px −12px rgba(12,77,162,.38)</dd>
+        <dt>전환</dt><dd>420ms cubic-bezier(.16,1,.3,1)</dd>
+      </dl>
+    </div>
+
+    <div class="spec">
+      <h4>장점 카드 <code>.perk</code> <span style="color:var(--mute);font-weight:600">S4</span></h4>
+      <dl>
+        <dt>패딩</dt><dd>24 × 24</dd>
+        <dt>모서리</dt><dd>18px · 테두리 1px</dd>
+        <dt>내부</dt><dd>flex · gap 17.6 (아이콘 + 텍스트)</dd>
+        <dt>소제목</dt><dd>16.8px / 700 / −.02em</dd>
+        <dt>배치</dt><dd>1열 → 820px 이상 2열</dd>
+      </dl>
+    </div>
+
+    <div class="spec">
+      <h4>없는 것 <code>.none</code> <span style="color:var(--mute);font-weight:600">S5</span></h4>
+      <dl>
+        <dt>패딩</dt><dd>25.6 × 17.6</dd>
+        <dt>숫자</dt><dd>30.4px / 800 / #1F5FE0</dd>
+        <dt>설명</dt><dd>14.7px / 600 / #141A22</dd>
+        <dt class="t">구분</dt><dd>gap 1px + #E4EAF3 바탕으로 헤어라인</dd>
+        <dt class="t">컨테이너</dt><dd>모서리 18px · overflow hidden</dd>
+        <dt>배치</dt><dd>1열 → 760px 이상 4열</dd>
+      </dl>
+    </div>
+
+    <div class="spec">
+      <h4>도움 카드 <code>.help</code> <span style="color:var(--mute);font-weight:600">S5</span></h4>
+      <dl>
+        <dt>패딩</dt><dd>24 × 24</dd>
+        <dt>배경</dt><dd>#DCE9FF · 테두리 없음</dd>
+        <dt>모서리</dt><dd>18px</dd>
+        <dt>배치</dt><dd>1열 → 760px 이상 2열</dd>
+      </dl>
+    </div>
+
+    <div class="spec">
+      <h4>단계 카드 <code>.step</code> <span style="color:var(--mute);font-weight:600">S6</span></h4>
+      <dl>
+        <dt>패딩</dt><dd>24.8 × 21.6</dd>
+        <dt>배경</dt><dd>#EEF4FF · 테두리 없음</dd>
+        <dt>번호</dt><dd>29.6px / 800 / 등폭 / −.04em</dd>
+        <dt>배치</dt><dd>1열 → 900px 이상 4열</dd>
+      </dl>
+    </div>
+
+    <div class="spec">
+      <h4>후기 카드 <code>.person</code> <span style="color:var(--mute);font-weight:600">S7</span></h4>
+      <dl>
+        <dt>모서리</dt><dd>18px · 테두리 1px · overflow hidden</dd>
+        <dt>인물</dt><dd>76px 폭 · 비율 4:5 · 모서리 12px</dd>
+        <dt>수치 칩</dt><dd>13.1px / 800 / 등폭<br>#0C4DA2 on #DCE9FF · 모서리 6px</dd>
+        <dt>문답 영역</dt><dd>패딩 24 · gap 18.4 · 상단선 1px #EDF1F8</dd>
+        <dt>배치</dt><dd>1열 → 760px 이상 2열</dd>
+      </dl>
+    </div>
+
+    <div class="spec">
+      <h4>FAQ <code>.faq</code> <span style="color:var(--mute);font-weight:600">S8</span></h4>
+      <dl>
+        <dt>질문</dt><dd>16px / 600 · 패딩 21.6 × 4</dd>
+        <dt>Q 뱃지</dt><dd>24 × 24 · 모서리 8px<br>#0C4DA2 on #DCE9FF · 12px / 800</dd>
+        <dt>답변</dt><dd>14.7px / 행간 1.8 · 좌측 들여쓰기 34.4</dd>
+        <dt class="t">구분</dt><dd>항목마다 상단선 1px #E4EAF3</dd>
+      </dl>
+    </div>
+
+  </div>
+
+  <h3>모달 리드폼</h3>
+  <div class="cards">
+    <div class="spec">
+      <h4>패널 <code>.modal__panel</code></h4>
+      <dl>
+        <dt>폭</dt><dd>min(460px, 100%)</dd>
+        <dt>모서리</dt><dd>20px</dd>
+        <dt>패딩</dt><dd>390: 25.6 · 768: 33 · 1440: 36</dd>
+        <dt>최대 높이</dt><dd>88vh · 내부 스크롤</dd>
+        <dt>그림자</dt><dd>0 24px 64px −16px rgba(0,0,0,.45)</dd>
+      </dl>
+    </div>
+    <div class="spec">
+      <h4>입력 필드 <code>.field</code></h4>
+      <dl>
+        <dt>높이</dt><dd>58px</dd>
+        <dt>모서리</dt><dd>14px</dd>
+        <dt>좌우 패딩</dt><dd>17.6px</dd>
+        <dt>글자</dt><dd><strong>16px</strong> — 아래 6번 항목 참조</dd>
+        <dt>라벨</dt><dd>13.6px / 600 · 필드와 gap 7.2</dd>
+        <dt>필드 간격</dt><dd>14.4px</dd>
+        <dt>모달 내</dt><dd>#F6F8FC 바탕 · 1px #E4EAF3</dd>
+        <dt>반전 위</dt><dd>흰 바탕 · 테두리 없음</dd>
+        <dt>오류</dt><dd>outline 2px #D32F2F · 바탕 #FFF7F7</dd>
+        <dt>안내문</dt><dd>#B4BDC9</dd>
+        <dt>체크박스</dt><dd>18 × 18</dd>
+      </dl>
+    </div>
+  </div>
+
+  <h3>하단 플로팅 바</h3>
+  <p class="note">화면 하단 고정 · 배경 <code>rgba(255,255,255,.94)</code> + <code>blur(10px)</code> · 상단선 1px · 세로 패딩 12px + <code>env(safe-area-inset-bottom)</code> · 내부 버튼 높이 56px, 폭 100%. <b>iPhone 홈 인디케이터 영역을 감안한 값이므로 세로 패딩을 고정 px로 바꾸지 마세요.</b></p>
+</section>
+
+<section>
+  <h2>반응형 분기 <em>breakpoints</em></h2>
+  <div class="tw"><table>
+    <thead><tr><th class="n">분기</th><th>대상</th><th>변화</th></tr></thead>
+    <tbody>
+      <tr><td class="n">700px</td><td class="k">.foot dl</td><td>1열 → 2열 (라벨 120px / 값 나머지)</td></tr>
+      <tr><td class="n">760px</td><td class="k">.nones</td><td>1열 → 4열</td></tr>
+      <tr><td class="n">760px</td><td class="k">.helps</td><td>1열 → 2열</td></tr>
+      <tr><td class="n">760px</td><td class="k">.people</td><td>1열 → 2열</td></tr>
+      <tr><td class="n">820px</td><td class="k">.perks</td><td>1열 → 2열</td></tr>
+      <tr><td class="n">900px</td><td class="k">.steps</td><td>1열 → 4열</td></tr>
+      <tr><td class="n">–</td><td class="k">.pains</td><td>항상 1열 (스크롤 하이라이트 때문)</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>모션 <em>motion</em></h2>
+  <p class="lede">이징은 하나만 씁니다. 카드마다 다른 곡선을 쓰지 않습니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>대상</th><th class="n">시간</th><th>이징 / 움직이는 속성</th></tr></thead>
+    <tbody>
+      <tr><td>기본값</td><td class="n">400ms</td><td><code>cubic-bezier(.16, 1, .3, 1)</code></td></tr>
+      <tr><td>고민 카드 하이라이트</td><td class="n">420ms</td><td>opacity + transform(scale)</td></tr>
+      <tr><td>버튼 hover</td><td class="n">400ms</td><td>transform(translateY) + box-shadow</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note"><b>움직이는 속성은 <code>transform</code>과 <code>opacity</code>뿐입니다.</b> width·height·top·margin은 애니메이션하지 않습니다. <code>prefers-reduced-motion</code> 대응이 이미 들어가 있으니, 새 모션을 추가하실 때도 이 분기를 같이 넣어 주세요.</p>
+</section>
+
+<section>
+  <h2>필요한 에셋 <em>assets</em></h2>
+  <div class="tw"><table>
+    <thead><tr><th>에셋</th><th class="n">표시 크기</th><th class="n">납품 권장</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td><strong>히어로 비주얼</strong></td><td class="n">최대 1080 폭</td><td class="n">2160 폭</td><td>프로토타입에 모티프와 금지 요소를 점선 박스로 표기해 두었습니다</td></tr>
+      <tr><td>후기 인물</td><td class="n">76 × 95</td><td class="n">304 × 380</td><td>비율 4:5 고정 · 모서리 12px는 CSS 처리</td></tr>
+      <tr><td>장점 아이콘</td><td class="n">카드 좌측</td><td class="n">SVG</td><td>4종 · 선 굵기 통일 필요</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>디자인 착수 전 판단이 필요한 것 <em>open</em></h2>
+  <p class="lede">규격을 뽑는 과정에서 발견한 항목입니다. 그대로 옮기면 안 되는 것들이라 먼저 정리해 주셔야 합니다.</p>
+
+  <div class="flags">
+
+    <div class="flag">
+      <b>1. 페이지에서 가장 큰 숫자가 히어로가 아닙니다</b>
+      <p>1440 기준 히어로 금액이 <code>73.6px</code>인데 S5의 <code>0원</code>이 <code>88px</code>입니다. <strong>14px 더 큽니다.</strong> B안은 금액으로 승부하는 안인데 시각적 정점이 "비용이 0원"에 가 있습니다. 히어로를 키우든 0원을 줄이든, 위계를 정해야 합니다.</p>
+    </div>
+
+    <div class="flag">
+      <b>2. 금액이 바뀝니다 — 자릿수에 종속되지 않게 잡아 주세요</b>
+      <p>현재 <code>+220만원</code>은 준법 사전심의 전 수치라 표현과 자릿수가 바뀔 가능성이 높습니다. 73.6px에 자간 −.05em이라 <strong>한 자리만 늘어도 줄바꿈이 생깁니다.</strong> 최대 자릿수를 가정한 레이아웃이 필요합니다.</p>
+    </div>
+
+    <div class="flag">
+      <b>3. 브레이크포인트가 네 종류입니다</b>
+      <p><code>700 / 760 / 820 / 900</code>이 제각각입니다. 컴포넌트별로 깨지지 않는 지점을 따로 잡은 결과인데, 이대로 두면 <strong>768~900 구간에서 섹션마다 열 수가 따로 놀아</strong> 태블릿에서 리듬이 끊깁니다. 한두 개로 정리하시길 권합니다.</p>
+    </div>
+
+    <div class="flag">
+      <b>4. 자간 값은 시스템 폰트 기준입니다</b>
+      <p>프로토타입은 웹폰트 없이 시스템 폰트로 렌더됩니다. 실제 구현 서체는 <strong>Pretendard</strong>이므로 표의 <code>−.03em</code> 같은 값은 <strong>Pretendard 적용 후 다시 잡아야 합니다.</strong> 특히 40px 이상 큰 글자에서 차이가 큽니다.</p>
+    </div>
+
+    <div class="flag">
+      <b>5. 숫자에 등폭 서체를 쓰고 있습니다</b>
+      <p><code>.zero</code>, 단계 번호, 후기 수치 칩이 시스템 등폭 서체입니다. 자릿수 정렬이 목적이었는데 Pretendard는 <code>font-variant-numeric: tabular-nums</code>로 같은 효과를 냅니다. <strong>Pretendard + tabular-nums로 통일</strong>하면 서체가 하나로 줄고 인상도 일관됩니다.</p>
+    </div>
+
+    <div class="flag">
+      <b>6. 입력 필드 16px는 내려도 되는 값이 아닙니다</b>
+      <p>iOS Safari는 입력 필드 글자가 16px 미만이면 포커스 시 화면을 자동 확대합니다. 리드폼에서 이게 일어나면 <strong>레이아웃이 튀면서 이탈이 생깁니다.</strong> 시각적으로 커 보여도 14px로 낮추지 마세요.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>본 규격은 프로토타입 <code>plan-b.html</code>의 소스와 렌더 결과에서 추출한 실측값입니다. 프로토타입이 갱신되면 이 문서도 함께 갱신됩니다. 내부 검토용이며 준법 사전심의 전 단계입니다.</p>
+</footer>
+
+</div>
+</body>
+</html>

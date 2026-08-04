@@ -141,6 +141,24 @@ body{
 }
 .deck:hover .open{gap:.85rem}
 
+/* ── 규격서 바 ── */
+.specbar{
+  display:flex;flex-wrap:wrap;gap:.75rem 1.5rem;align-items:center;justify-content:space-between;
+  padding:1.15rem 1.4rem;border:1px solid var(--line);border-radius:14px;
+  background:var(--card);box-shadow:var(--shadow);text-decoration:none;color:inherit;
+  transition:border-color 300ms var(--ease),transform 300ms var(--ease);
+}
+.specbar:hover,.specbar:focus-visible{border-color:var(--brand);transform:translateY(-2px)}
+.specbar:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.specbar__txt{display:grid;gap:.1rem;font-size:13px;color:var(--mute);max-width:52ch}
+.specbar__txt b{font-size:14.5px;font-weight:800;color:var(--ink)}
+.specbar__go{
+  flex:none;font-size:13px;font-weight:800;color:var(--brand);
+  padding:.45rem .9rem;border:1.5px solid var(--brand);border-radius:999px;
+  transition:letter-spacing 260ms var(--ease);
+}
+.specbar:hover .specbar__go{letter-spacing:.02em}
+
 /* ── 안내 블록 ── */
 .panel{
   padding:1.4rem 1.5rem;border:1px solid var(--line);border-radius:14px;background:var(--card);
@@ -217,6 +235,14 @@ footer{
     </a>
 
   </section>
+
+  <a class="specbar" href="spec-b.html">
+    <span class="specbar__txt">
+      <b>B안 디자인 규격서</b>
+      그리드 · 타이포 · 색 · 컴포넌트 실측 치수와, 착수 전 판단이 필요한 6가지
+    </span>
+    <span class="specbar__go">규격 보기 →</span>
+  </a>
 
   <section class="panel" aria-labelledby="howto-h">
     <h3 id="howto-h">뷰어 사용법</h3>
