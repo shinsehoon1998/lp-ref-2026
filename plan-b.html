@@ -475,6 +475,62 @@ body{margin:0;background:var(--ch-bg);color:var(--ch-ink);font-family:var(--font
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
 }
+
+/* ───────────────────────── 규격 인스펙터 ───────────────────────── */
+.canvas[data-inspect="1"], .canvas[data-inspect="1"] *{cursor:crosshair !important}
+.insp-hl{
+  position:fixed;z-index:88;pointer-events:none;display:none;
+  border:1.5px solid var(--ch-accent);border-radius:4px;
+  background:rgba(143,182,242,.09);
+}
+.insp-hl[data-on="1"]{display:block}
+.insp-hl b{
+  position:absolute;top:-21px;left:-1.5px;
+  font:700 11px/18px var(--font-sans);letter-spacing:-.01em;
+  background:var(--ch-accent);color:#0E141B;padding:0 6px;border-radius:4px;white-space:nowrap;
+}
+.insp{
+  position:fixed;right:14px;bottom:14px;z-index:95;width:328px;max-width:calc(100vw - 28px);
+  max-height:min(72vh,600px);overflow:auto;display:none;
+  background:var(--ch-panel);border:1px solid var(--ch-line);border-radius:12px;
+  box-shadow:0 22px 54px -18px rgba(0,0,0,.72);color:var(--ch-ink);font-family:var(--font-sans);
+}
+.insp[data-on="1"]{display:block}
+.insp__hd{
+  position:sticky;top:0;z-index:1;background:var(--ch-panel);
+  padding:12px 40px 10px 14px;border-bottom:1px solid var(--ch-line);display:grid;gap:3px;
+}
+.insp__nm{font-size:14px;font-weight:800;letter-spacing:-.01em}
+.insp__nm i{font-style:normal;font-weight:700;font-size:11px;color:var(--ch-mute);margin-left:.4rem}
+.insp__cls{font-family:var(--font-mono);font-size:11px;color:var(--ch-accent);word-break:break-all}
+.insp__x{
+  position:absolute;top:9px;right:9px;width:24px;height:24px;border:0;border-radius:6px;
+  background:transparent;color:var(--ch-mute);font-size:13px;line-height:1;cursor:pointer;
+}
+.insp__x:hover{background:var(--ch-line);color:var(--ch-ink)}
+.insp__bd{padding:11px 14px 12px;display:grid;gap:8px}
+.insp__row{display:grid;grid-template-columns:3.9rem 1fr;gap:9px;align-items:baseline}
+.insp__k{color:var(--ch-mute);font-weight:700;font-size:11px;letter-spacing:.01em}
+.insp__v{font-family:var(--font-mono);font-size:11.5px;line-height:1.6;color:var(--ch-ink);word-break:break-word}
+.insp__v.t{font-family:var(--font-sans);font-size:12px;line-height:1.65;color:#C9D6E6}
+.insp__ft{padding:0 14px 14px;display:flex;gap:6px}
+.insp__ft button{
+  flex:1;height:31px;border:1px solid var(--ch-line);border-radius:7px;
+  background:transparent;color:var(--ch-ink);font-family:var(--font-sans);
+  font-size:11.5px;font-weight:700;cursor:pointer;
+}
+.insp__ft button:hover{background:var(--ch-line)}
+.insp__hint{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:94;display:none;
+  background:var(--ch-panel);border:1px solid var(--ch-line);border-radius:999px;
+  padding:7px 15px;font-family:var(--font-sans);font-size:12px;font-weight:600;color:var(--ch-mute);
+  box-shadow:0 12px 30px -14px rgba(0,0,0,.7);
+}
+.insp__hint[data-on="1"]{display:block}
+@media (max-width:600px){
+  .insp{left:14px;right:14px;width:auto;max-height:56vh}
+  .insp__hint{bottom:auto;top:14px}
+}
 </style>
 
 </head>
@@ -1075,6 +1131,296 @@ body{margin:0;background:var(--ch-bg);color:var(--ch-ink);font-family:var(--font
     store={}; try{ localStorage.removeItem(KEY); }catch(e){}
     location.reload();
   });
+})();
+
+/* ───────────────────────── 규격 인스펙터 ───────────────────────── */
+(function(){
+  var canvas=document.getElementById('canvas');
+  var chromeBar=document.querySelector('.chrome');
+  var editBtn=document.getElementById('editBtn');
+  if(!canvas||!chromeBar) return;
+
+  /* 클래스 → [이름, 섹션, 메모] · 메모는 규격서와 같은 390/768/1440 기준 */
+  var REG={
+    'hero':['히어로 영역','S1',''],
+    'hero__kicker':['히어로 칩','S1','14.4px 고정 · 알약형 · 반투명 흰 배경'],
+    'hero__h1':['히어로 헤드라인','S1','27 / 36 / 40px · 자간 −.03em'],
+    'hero__money':['히어로 금액','S1','45.9 / 65.5 / 73.6px · 심의로 자릿수가 바뀔 수 있음'],
+    'hero__note':['히어로 각주','S1','13.1px 고정 · 흰색 72%'],
+    'hero__sub':['히어로 서브카피','S1','16px 고정'],
+    'btn':['CTA 버튼','','높이 60 / 최종 68 / 플로팅 56 · 모서리 14'],
+    'sec':['섹션','','세로 패딩 67.5 / 86.4 / 120 · 좌우 20 / 30.7 / 40'],
+    'inner':['콘텐츠 컨테이너','','최대 1080px · 중앙 정렬'],
+    'eyebrow':['아이브로우','','13.1px 고정 · 700 · 자간 +.02em'],
+    'title':['섹션 제목','','25.4 / 33 / 37.6px · 자간 −.03em'],
+    'sub':['섹션 부제','','15.6 / 16.7 / 17.3px · 행간 1.75'],
+    'pains':['고민 카드 열','S2','항상 1열 · 최대 680px 중앙'],
+    'pain':['고민 카드','S2','스크롤 하이라이트 대상 · 전환 420ms'],
+    'solve':['해결책 카드','S3','패딩 28 / 34.6 / 44'],
+    'perks':['장점 그리드','S4','1열 → 820px 이상 2열'],
+    'perk':['장점 카드','S4','flex · 아이콘 + 텍스트 간격 17.6'],
+    'zero':['0원 숫자','S5','57.4 / 81.9 / 88px · 페이지 최대 숫자'],
+    'nones':['없는 것 그리드','S5','1열 → 760px 이상 4열 · 간격 1px 헤어라인'],
+    'none':['없는 것 셀','S5','숫자 30.4px / 800'],
+    'helps':['도움 그리드','S5','1열 → 760px 이상 2열'],
+    'help':['도움 카드','S5','배경 #DCE9FF · 테두리 없음'],
+    'steps':['단계 그리드','S6','1열 → 900px 이상 4열'],
+    'step':['단계 카드','S6','번호 29.6px / 800 / 등폭'],
+    'people':['후기 그리드','S7','1열 → 760px 이상 2열'],
+    'person':['후기 카드','S7','overflow hidden'],
+    'person__pic':['후기 인물 사진','S7','76px 폭 · 비율 4:5 · 납품 권장 304×380'],
+    'person__hd':['후기 카드 머리','S7',''],
+    'person__pay':['후기 수치 칩','S7','13.1px / 800 · #0C4DA2 on #DCE9FF'],
+    'person__more':['후기 더보기','S7',''],
+    'qa':['후기 문답','S7','상단선 1px #EDF1F8'],
+    'faq':['FAQ 항목','S8','질문 16px / 600 · Q 뱃지 24×24'],
+    'faq__a':['FAQ 답변','S8','14.7px · 행간 1.8 · 좌측 들여쓰기 34.4'],
+    'close__h':['클로징 헤드라인','S9','27 / 36 / 38.4px'],
+    'close__money':['클로징 금액','S9','34.1 / 45.4 / 51.2px'],
+    'fine':['각주','','12.8px 고정'],
+    'hedge':['완화 문구','','좌측선 3px · 배경 #F4F8FF'],
+    'float':['하단 플로팅 바','','safe-area-inset 대응 · 버튼 높이 56'],
+    'modal':['리드폼 모달','',''],
+    'modal__panel':['모달 패널','','min(460px, 100%) · 모서리 20 · 최대 88vh'],
+    'field':['입력 필드','','높이 58 · 글자 16px (iOS 자동확대 방지 하한)'],
+    'consent':['동의 체크','','체크박스 18×18'],
+    'lead':['리드폼','',''],
+    'done':['제출 완료','',''],
+    'foot':['푸터','','배경 #20262E'],
+    'foot__links':['푸터 링크','',''],
+    'foot__fine':['푸터 고지','','12.5px 고정'],
+    'ph':['에셋 자리','','디자이너 납품 대상 · 모티프와 금지 요소 표기'],
+    'notice':['법정 필수 고지','','본문급 크기 · 눈에 띄는 색 요구(유의사항 DO 4)'],
+    'trustbar':['신뢰 바','',''],
+    'timeline':['하루 스케치','',''],
+    'tl':['타임라인 항목','','']
+  };
+
+  /* ── DOM 준비 ── */
+  var hl=document.createElement('div');
+  hl.className='insp-hl'; hl.appendChild(document.createElement('b'));
+  document.body.appendChild(hl);
+  var lab=hl.firstChild;
+
+  var hint=document.createElement('div');
+  hint.className='insp__hint';
+  hint.textContent='요소 위에 올리면 이름, 클릭하면 규격이 보입니다  ·  ESC 닫기';
+  document.body.appendChild(hint);
+
+  var panel=document.createElement('div');
+  panel.className='insp';
+  panel.innerHTML=
+    '<div class="insp__hd">'+
+      '<span class="insp__nm" id="ispNm">—</span>'+
+      '<span class="insp__cls" id="ispCls"></span>'+
+      '<button type="button" class="insp__x" id="ispX" aria-label="닫기">✕</button>'+
+    '</div>'+
+    '<div class="insp__bd" id="ispBd"></div>'+
+    '<div class="insp__ft"><button type="button" id="ispCopy">규격 복사</button></div>';
+  document.body.appendChild(panel);
+
+  var seg=document.createElement('div');
+  seg.className='seg'; seg.setAttribute('role','group'); seg.setAttribute('aria-label','규격 보기');
+  var btn=document.createElement('button');
+  btn.type='button'; btn.id='inspBtn'; btn.setAttribute('aria-pressed','false');
+  btn.textContent='▣ 규격';
+  seg.appendChild(btn);
+  if(editBtn&&editBtn.parentNode&&editBtn.parentNode.parentNode){
+    editBtn.parentNode.parentNode.insertBefore(seg,editBtn.parentNode.nextSibling);
+  }else{ chromeBar.appendChild(seg); }
+
+  /* ── 유틸 ── */
+  function r1(v){ var n=parseFloat(v); return isNaN(n)?v:Math.round(n*10)/10; }
+  function hex(c){
+    var m=/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/.exec(c||'');
+    if(!m) return c||'';
+    var a=m[4]!==undefined?parseFloat(m[4]):1;
+    if(a===0) return '';
+    var h='#';
+    for(var i=1;i<=3;i++){ h+=('0'+parseInt(m[i],10).toString(16)).slice(-2); }
+    h=h.toUpperCase();
+    return a<1 ? h+'  '+Math.round(a*100)+'%' : h;
+  }
+  function shadowHex(s){
+    return s.replace(/rgba?\([^)]*\)/g,function(m){ return hex(m)||'투명'; });
+  }
+  function box4(cs,p){
+    var t=r1(cs[p+'Top']),r=r1(cs[p+'Right']),b=r1(cs[p+'Bottom']),l=r1(cs[p+'Left']);
+    if(t===r&&r===b&&b===l) return String(t);
+    if(t===b&&r===l) return t+' × '+r;
+    return t+' '+r+' '+b+' '+l;
+  }
+  function regOf(el){
+    var cl=(el.className||'').toString().split(/\s+/);
+    for(var i=0;i<cl.length;i++){ if(REG[cl[i]]) return REG[cl[i]]; }
+    return null;
+  }
+  function labelOf(el){
+    var r=regOf(el);
+    if(r) return r[0];
+    var t=el.tagName.toLowerCase();
+    if(t==='h1'||t==='h2'||t==='h3') return '제목 '+t;
+    if(t==='p') return '문단';
+    if(t==='a') return '링크';
+    if(t==='button') return '버튼';
+    if(t==='img') return '이미지';
+    if(t==='li') return '목록 항목';
+    if(t==='input'||t==='select') return '입력';
+    if(t==='summary') return 'FAQ 질문';
+    return t;
+  }
+  function pick(el){
+    if(!el||el===canvas||!el.closest) return null;
+    if(el.closest('.chrome')||el.closest('.insp')||el.closest('.insp-hl')||el.closest('.note')) return null;
+    var n=el,d=0;
+    while(n&&n!==canvas&&d<5){ if(regOf(n)) return n; n=n.parentElement; d++; }
+    return el;
+  }
+  function hasOwnText(el){
+    for(var i=0;i<el.childNodes.length;i++){
+      var n=el.childNodes[i];
+      if(n.nodeType===3&&n.textContent.trim()) return true;
+    }
+    return false;
+  }
+
+  /* ── 측정 ── */
+  function measure(el){
+    var cs=getComputedStyle(el), rc=el.getBoundingClientRect(), reg=regOf(el);
+    var cls=(el.className||'').toString().trim();
+    cls=cls?'.'+cls.split(/\s+/).join('.'):el.tagName.toLowerCase();
+    var rows=[];
+
+    rows.push(['크기', r1(rc.width)+' × '+r1(rc.height)+'  px']);
+
+    var pad=box4(cs,'padding'); if(pad!=='0') rows.push(['패딩',pad]);
+    var mar=box4(cs,'margin');  if(mar!=='0') rows.push(['마진',mar]);
+
+    if(cs.display.indexOf('grid')>=0||cs.display.indexOf('flex')>=0){
+      if(cs.gap&&cs.gap!=='normal'){
+        rows.push(['간격', cs.gap.split(/\s+/).map(r1).join(' × ')]);
+      }
+      if(cs.display.indexOf('grid')>=0&&cs.gridTemplateColumns&&cs.gridTemplateColumns!=='none'){
+        rows.push(['열 수', cs.gridTemplateColumns.split(/\s+/).length+'열']);
+      }
+    }
+
+    var rad=r1(cs.borderTopLeftRadius);
+    if(rad) rows.push(['모서리', rad+'px']);
+    var bw=r1(cs.borderTopWidth);
+    if(bw) rows.push(['테두리', bw+'px  '+hex(cs.borderTopColor)]);
+    var bg=hex(cs.backgroundColor);
+    if(bg) rows.push(['배경', bg]);
+    if(cs.boxShadow&&cs.boxShadow!=='none') rows.push(['그림자', shadowHex(cs.boxShadow)]);
+
+    if(hasOwnText(el)){
+      var fs=parseFloat(cs.fontSize);
+      var lh=cs.lineHeight==='normal'?'기본':(Math.round(parseFloat(cs.lineHeight)/fs*100)/100);
+      var ls=cs.letterSpacing==='normal'?'0':(Math.round(parseFloat(cs.letterSpacing)/fs*1000)/1000+'em');
+      rows.push(['글자', r1(fs)+'px  /  '+cs.fontWeight+'  /  행간 '+lh+'  /  자간 '+ls]);
+      rows.push(['글자색', hex(cs.color)]);
+    }
+
+    if(reg&&reg[2]) rows.push(['메모', reg[2], 't']);
+
+    return {
+      title: labelOf(el),
+      sec:   reg&&reg[1]?reg[1]:'',
+      cls:   cls,
+      rows:  rows
+    };
+  }
+
+  /* ── 표시 ── */
+  var copyTxt='';
+  function hlTo(el){
+    if(!el){ hl.removeAttribute('data-on'); return; }
+    var r=el.getBoundingClientRect();
+    hl.style.left=(r.left-1.5)+'px';
+    hl.style.top=(r.top-1.5)+'px';
+    hl.style.width=r.width+'px';
+    hl.style.height=r.height+'px';
+    lab.textContent=labelOf(el);
+    hl.setAttribute('data-on','1');
+  }
+  function render(el){
+    var m=measure(el);
+    var nm=document.getElementById('ispNm');
+    nm.textContent=m.title;
+    if(m.sec){
+      var i=document.createElement('i'); i.textContent=m.sec; nm.appendChild(i);
+    }
+    document.getElementById('ispCls').textContent=m.cls;
+    var bd=document.getElementById('ispBd');
+    bd.textContent='';
+    for(var k=0;k<m.rows.length;k++){
+      var row=m.rows[k];
+      var d=document.createElement('div'); d.className='insp__row';
+      var kk=document.createElement('span'); kk.className='insp__k'; kk.textContent=row[0];
+      var vv=document.createElement('span'); vv.className='insp__v'+(row[2]==='t'?' t':''); vv.textContent=row[1];
+      d.appendChild(kk); d.appendChild(vv); bd.appendChild(d);
+    }
+    copyTxt=m.title+(m.sec?' ('+m.sec+')':'')+'  '+m.cls+'\n'+
+      m.rows.map(function(r){ return r[0]+': '+r[1]; }).join('\n');
+    panel.setAttribute('data-on','1');
+  }
+
+  /* ── 이벤트 ── */
+  var on=false, pinned=null;
+
+  function close(){
+    pinned=null;
+    panel.removeAttribute('data-on');
+    hl.removeAttribute('data-on');
+  }
+
+  btn.addEventListener('click',function(){
+    on=!on;
+    btn.setAttribute('aria-pressed',on?'true':'false');
+    canvas.setAttribute('data-inspect',on?'1':'0');
+    hint.setAttribute('data-on',on?'1':'0');
+    if(!on){ close(); }
+    else if(editBtn&&editBtn.getAttribute('aria-pressed')==='true'){ editBtn.click(); }
+  });
+
+  if(editBtn){
+    editBtn.addEventListener('click',function(){
+      setTimeout(function(){
+        if(on&&editBtn.getAttribute('aria-pressed')==='true'){ btn.click(); }
+      },0);
+    });
+  }
+
+  canvas.addEventListener('mousemove',function(e){
+    if(!on||pinned) return;
+    hlTo(pick(e.target));
+  });
+  canvas.addEventListener('mouseleave',function(){
+    if(on&&!pinned) hl.removeAttribute('data-on');
+  });
+  canvas.addEventListener('click',function(e){
+    if(!on) return;
+    e.preventDefault(); e.stopPropagation();
+    var t=pick(e.target);
+    if(!t) return;
+    pinned=t; hlTo(t); render(t);
+  },true);
+
+  document.getElementById('ispX').addEventListener('click',close);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&on) close();
+  });
+
+  var copyBtn=document.getElementById('ispCopy');
+  copyBtn.addEventListener('click',function(){
+    if(navigator.clipboard&&copyTxt) navigator.clipboard.writeText(copyTxt);
+    copyBtn.textContent='복사됨';
+    setTimeout(function(){ copyBtn.textContent='규격 복사'; },1200);
+  });
+
+  function follow(){ if(on&&pinned) hlTo(pinned); }
+  window.addEventListener('scroll',follow,{passive:true});
+  window.addEventListener('resize',follow);
 })();
 </script>
 
