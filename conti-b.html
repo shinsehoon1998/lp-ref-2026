@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>영상 인터뷰 콘티 — B안 LP</title>
+<style>
+:root{
+  --paper:#EEF3FB; --card:#FFFFFF; --ink:#141A22; --body:#3A424D; --mute:#7B8593;
+  --brand:#0C4DA2; --accent:#1F5FE0; --notice:#C62828; --good:#1B7F5A;
+  --line:#DBE3F0; --zebra:#F7FAFE;
+  --container:1040px; --ease:cubic-bezier(.16,1,.3,1);
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root{--paper:#0B1017;--card:#141B25;--ink:#EEF3FB;--body:#AEBACA;--mute:#788495;
+    --brand:#7FAEF5;--accent:#9CC2FF;--notice:#FF8A80;--good:#66D4A6;--line:#243043;--zebra:#0F1620}
+}
+:root[data-theme="light"]{--paper:#EEF3FB;--card:#FFFFFF;--ink:#141A22;--body:#3A424D;--mute:#7B8593;
+  --brand:#0C4DA2;--accent:#1F5FE0;--notice:#C62828;--good:#1B7F5A;--line:#DBE3F0;--zebra:#F7FAFE}
+:root[data-theme="dark"]{--paper:#0B1017;--card:#141B25;--ink:#EEF3FB;--body:#AEBACA;--mute:#788495;
+  --brand:#7FAEF5;--accent:#9CC2FF;--notice:#FF8A80;--good:#66D4A6;--line:#243043;--zebra:#0F1620}
+
+*{box-sizing:border-box}
+h1,h2,h3,h4,p,dl,dd,figure,ul,ol,table{margin:0}
+ul,ol{padding:0;list-style:none}
+
+body{
+  background:var(--paper);color:var(--body);
+  font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  font-size:15px;line-height:1.72;-webkit-font-smoothing:antialiased;
+  padding:clamp(1.4rem,1rem + 3vw,3.5rem) 1.25rem clamp(3rem,2rem + 4vw,6rem);
+}
+.wrap{max-width:var(--container);margin-inline:auto;display:grid;gap:clamp(2rem,1.4rem + 2vw,3rem)}
+
+.masthead{display:grid;gap:.8rem;padding-bottom:1.5rem;border-bottom:2px solid var(--ink)}
+.kicker{font-size:11.5px;font-weight:800;letter-spacing:.22em;color:var(--brand)}
+.masthead h1{font-size:clamp(1.5rem,1.2rem + 1.8vw,2.3rem);line-height:1.26;font-weight:800;
+  color:var(--ink);letter-spacing:-.02em;text-wrap:balance}
+.masthead p{max-width:62ch}
+.masthead b{color:var(--ink);font-weight:700}
+.crumbs{display:flex;flex-wrap:wrap;gap:.5rem 1.2rem;font-size:12.5px;padding-top:.2rem}
+.crumbs a{color:var(--brand);font-weight:700;text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{border-bottom-color:currentColor}
+
+.facts{display:grid;gap:.6rem;grid-template-columns:repeat(2,1fr)}
+@media (min-width:720px){.facts{grid-template-columns:repeat(4,1fr)}}
+.fact{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:.85rem 1rem;display:grid;gap:.1rem}
+.fact dt{font-size:11px;font-weight:800;color:var(--mute);letter-spacing:.04em}
+.fact dd{font-size:15px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+.fact dd span{font-size:11.5px;font-weight:600;color:var(--mute);margin-left:.3rem}
+
+section{display:grid;gap:1rem}
+section > h2{
+  display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap;
+  font-size:clamp(1.1rem,.95rem + .7vw,1.35rem);font-weight:800;color:var(--ink);letter-spacing:-.015em;
+  padding-bottom:.55rem;border-bottom:1px solid var(--line);
+}
+section > h2 em{font-style:normal;font-family:var(--mono);font-size:.72em;color:var(--brand);font-weight:700}
+h3{font-size:14.5px;font-weight:800;color:var(--ink);margin-top:.4rem;letter-spacing:-.01em}
+.lede{max-width:72ch;font-size:14px}
+.lede code,.note code,p code,td code{font-family:var(--mono);font-size:12px;color:var(--brand);
+  background:var(--zebra);padding:.05rem .3rem;border-radius:4px}
+
+/* ── 콘티 씬 ── */
+.scenes{display:grid;gap:.85rem}
+.scene{border:1px solid var(--line);border-radius:14px;background:var(--card);overflow:hidden;display:grid}
+.scene__hd{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem .9rem;
+  padding:.75rem 1.1rem;background:var(--zebra);border-bottom:1px solid var(--line);
+}
+.scene__no{font-family:var(--mono);font-size:12px;font-weight:800;color:var(--brand)}
+.scene__tc{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;color:var(--ink);font-weight:700}
+.scene__ttl{font-size:13.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.scene__tag{
+  margin-left:auto;font-size:11px;font-weight:800;padding:.15rem .55rem;border-radius:999px;
+  background:var(--brand);color:#fff;white-space:nowrap;
+}
+.scene__tag[data-k="open"]{background:var(--good);color:#fff}
+.scene__tag[data-k="risk"]{background:var(--notice);color:#fff}
+.scene__bd{display:grid;gap:0}
+@media (min-width:760px){.scene__bd{grid-template-columns:1fr 1fr}}
+.pane{padding:.9rem 1.1rem;display:grid;gap:.55rem;align-content:start}
+.pane + .pane{border-top:1px solid var(--line)}
+@media (min-width:760px){.pane + .pane{border-top:0;border-left:1px solid var(--line)}}
+.f{display:grid;gap:.15rem}
+.f dt{font-size:10.5px;font-weight:800;color:var(--mute);letter-spacing:.06em}
+.f dd{font-size:13.5px;color:var(--body);line-height:1.66}
+.f dd.say{font-size:14.5px;color:var(--ink);font-weight:600;line-height:1.62;
+  border-left:2px solid var(--brand);padding-left:.7rem}
+.f dd.cap{font-family:var(--mono);font-size:12px;color:var(--ink);
+  background:var(--zebra);border-radius:6px;padding:.4rem .6rem;line-height:1.6}
+.why{
+  grid-column:1/-1;padding:.75rem 1.1rem;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--body);display:flex;gap:.6rem;align-items:baseline;flex-wrap:wrap;
+}
+.why b{color:var(--brand);font-weight:800;font-size:11px;letter-spacing:.05em;white-space:nowrap}
+.why span{flex:1;min-width:14rem}
+
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
+th,td{padding:.6rem .8rem;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{background:var(--zebra);font-size:11px;font-weight:800;color:var(--mute);letter-spacing:.06em;white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+td.n,th.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+td strong{color:var(--ink);font-weight:700}
+td del{color:var(--notice);text-decoration-thickness:1px}
+td ins{color:var(--good);text-decoration:none;font-weight:700}
+td .q{font-size:15px;font-weight:800;color:var(--ink)}
+
+.note{border:1px dashed var(--line);border-radius:12px;padding:.9rem 1.1rem;font-size:13px}
+.note b{color:var(--ink);font-weight:800}
+.flags{display:grid;gap:.9rem}
+.flag{border:1px solid var(--line);border-left:3px solid var(--notice);border-radius:0 12px 12px 0;
+  background:var(--card);padding:1rem 1.2rem;display:grid;gap:.35rem}
+.flag b{color:var(--notice);font-weight:800;font-size:13.5px}
+.flag p{font-size:13.5px}
+.checks{display:grid;gap:.45rem;font-size:13.5px}
+.checks li{display:grid;grid-template-columns:1.1rem 1fr;gap:.6rem;align-items:baseline}
+.checks li::before{content:"☐";color:var(--mute);font-size:13px}
+.checks li b{color:var(--ink);font-weight:700}
+
+footer{padding-top:1.4rem;border-top:1px solid var(--line);font-size:12px;color:var(--mute)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <p class="kicker">삼성화재금융서비스 · 점검본부</p>
+  <h1>영상 인터뷰 콘티<br>B안 LP 임베드용 90초</h1>
+  <p>유튜브 영상 87편의 메타데이터, 자막 4편, 댓글 241개를 수집·분석해 설계했습니다. <b>씬마다 처리할 반박을 하나씩 지정</b>했고, 그 반박은 실제 댓글에서 나온 것입니다. LP의 "섹션 하나가 반박 하나를 처리한다"는 규칙을 영상에 그대로 옮겼습니다.</p>
+  <p class="crumbs">
+    <a href="index.html">← 시안 목록</a>
+    <a href="plan-b.html">B안 프로토타입</a>
+    <a href="spec-b.html">B안 디자인 규격서</a>
+    <span style="color:var(--mute)">기준일 2026-08-04</span>
+  </p>
+</header>
+
+<dl class="facts">
+  <div class="fact"><dt>목적</dt><dd>LP 전환<span>유튜브 도달 아님</span></dd></div>
+  <div class="fact"><dt>길이</dt><dd>90<span>초</span></dd></div>
+  <div class="fact"><dt>씬</dt><dd>8<span>개</span></dd></div>
+  <div class="fact"><dt>금액</dt><dd>노출<span>근거 자막 필수</span></dd></div>
+</dl>
+
+<section>
+  <h2>이 콘티가 이렇게 생긴 이유 <em>research</em></h2>
+  <p class="lede">리서치에서 확인된 세 가지가 구조를 결정했습니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>발견</th><th class="n">근거</th><th>콘티 반영</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>브랜드 공식 영상은 안 본다</strong></td>
+        <td class="n">메리츠 공식 3,603뷰<br>개인 채널 27,307뷰</td>
+        <td>브랜드 인트로를 <strong>맨 앞에서 제거</strong>. 0초는 인터뷰이의 말로 연다</td>
+      </tr>
+      <tr>
+        <td><strong>도입이 늦으면 못 잡는다</strong></td>
+        <td class="n">메리츠 공식<br>16초까지 정보 없음</td>
+        <td>0~6초 <strong>콜드오픈</strong>. 가장 센 반박을 우리가 먼저 입에 올린다</td>
+      </tr>
+      <tr>
+        <td><strong>불리한 정보를 먼저 말한 쪽이 신뢰를 얻는다</strong></td>
+        <td class="n">"NO광고" 표방 영상이<br>같은 소재로 7.6배</td>
+        <td>씬 6에서 <strong>환수를 우리 입으로</strong> 먼저 설명</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <h3>씬 배치의 기준이 된 이의제기</h3>
+  <p class="lede">댓글 241개에서 추출했습니다. 건수 순입니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th class="n">건수</th><th>이의제기</th><th class="n">처리 씬</th><th>실제 댓글</th></tr></thead>
+    <tbody>
+      <tr><td class="n">48</td><td><strong>교육·시험 부담</strong></td><td class="n">S4</td><td>보험은 정말 1도 몰라서 본 거거든요</td></tr>
+      <tr><td class="n">40</td><td><strong>지인영업 · 인맥 소모</strong></td><td class="n">S1 · S7</td><td>주변 인맥 빨아먹고 버리는 식이에요 <span style="color:var(--mute)">♡28</span></td></tr>
+      <tr><td class="n">19</td><td><strong>수수료 환수</strong></td><td class="n">S6</td><td>권유하는 사람을 봤는데 환수금이 있었다니</td></tr>
+      <tr><td class="n">17</td><td>오래 못 감</td><td class="n">S8</td><td>1년 딱 지나면…</td></tr>
+      <tr><td class="n">11</td><td>허위·과장 광고</td><td class="n">S3</td><td>합법적인 사기를 치네 <span style="color:var(--mute)">♡20</span></td></tr>
+      <tr><td class="n">3</td><td>자기계약(자폭)</td><td class="n">S7</td><td>합격한 당일 저녁에 바로 문자, 내 보험부터 챙기라며</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>콘티 <em>90s · 8 scenes</em></h2>
+  <div class="scenes">
+
+    <article class="scene">
+      <div class="scene__hd">
+        <span class="scene__no">S1</span><span class="scene__tc">0:00–0:06</span>
+        <span class="scene__ttl">콜드오픈</span><span class="scene__tag" data-k="open">브랜드 인트로 없음</span>
+      </div>
+      <div class="scene__bd">
+        <div class="pane">
+          <dl class="f"><dt>화면</dt><dd>바스트 샷 · 고정 · 정면에서 살짝 비낀 각도. 인터뷰이가 웃다가 멈칫하며 말을 뗀다. 앞 컷 없이 <strong>말 중간부터</strong> 시작</dd></dl>
+          <dl class="f"><dt>대사</dt><dd class="say">"지인한테 팔라고 할 줄 알았어요."</dd></dl>
+        </div>
+        <div class="pane">
+          <dl class="f"><dt>자막</dt><dd class="cap">없음 — 대사만으로 간다</dd></dl>
+          <dl class="f"><dt>오디오</dt><dd>거의 무음. BGM은 0:06부터 페이드인</dd></dl>
+          <dl class="f"><dt>비고</dt><dd>로고·타이틀·자기소개 <strong>전부 금지</strong>. 첫 6초에 브랜드가 보이면 광고로 분류되고 넘어갑니다</dd></dl>
+        </div>
+        <p class="why"><b>반박 처리</b><span>지인영업(40건) — 가장 큰 반발을 시청자보다 먼저 꺼냅니다. 이 문장이 나오는 순간 "뻔한 광고가 아니네"가 성립합니다.</span></p>
+      </div>
+    </article>
+
+    <article class="scene">
+      <div class="scene__hd">
+        <span class="scene__no">S2</span><span class="scene__tc">0:06–0:14</span>
+        <span class="scene__ttl">화자 확인</span><span class="scene__tag">고용형태 명시</span>
+      </div>
+      <div class="scene__bd">
+        <div class="pane">
+          <dl class="f"><dt>화면</dt><dd>같은 앵글 유지. 컷 없음</dd></dl>
+          <dl class="f"><dt>대사</dt><dd class="say">"○년차 직장인이고요. 평일엔 회사 다니고, 주말에만 활동해요."</dd></dl>
+        </div>
+        <div class="pane">
+          <dl class="f"><dt>자막</dt><dd class="cap">김○○ · 직장인 ○년차<br>삼성화재금융서비스 위촉 설계사 · 활동 ○개월</dd></dl>
+          <dl class="f"><dt>오디오</dt><dd>BGM 인. 잔잔한 어쿠스틱, 보컬 없음</dd></dl>
+          <dl class="f"><dt>비고</dt><dd>자막에 <code>위촉</code>이 반드시 들어갑니다. <code>채용</code>·<code>입사</code>·<code>직원</code> 금지</dd></dl>
+        </div>
+        <p class="why"><b>규제</b><span>유의사항 DO 3 — 고용주체와 고용형태를 명시해야 합니다. 이 자막이 그 의무를 집니다.</span></p>
+      </div>
+    </article>
+
+    <article class="scene">
+      <div class="scene__hd">
+        <span class="scene__no">S3</span><span class="scene__tc">0:14–0:26</span>
+        <span class="scene__ttl">광고 프레임 해체</span><span class="scene__tag" data-k="open">차별화 지점</span>
+      </div>
+      <div class="scene__bd">
+        <div class="pane">
+          <dl class="f"><dt>화면</dt><dd>질문 자막이 하단에 카드로 등장. 인물은 듣는 표정 → 답변</dd></dl>
+          <dl class="f"><dt>질문</dt><dd class="cap">광고 보고 오신 거죠?</dd></dl>
+          <dl class="f"><dt>대사</dt><dd class="say">"저도 '얼마 번다'는 광고는 안 믿었어요. 제가 궁금했던 건 액수가 아니라, 대체 뭘 하는 거냐였거든요."</dd></dl>
+        </div>
+        <div class="pane">
+          <dl class="f"><dt>자막</dt><dd class="cap">질문 카드만. 대사 자막은 넣지 않음</dd></dl>
+          <dl class="f"><dt>오디오</dt><dd>BGM 유지</dd></dl>
+          <dl class="f"><dt>비고</dt><dd>이 대사가 <strong>다음 씬으로 넘기는 다리</strong>입니다. "뭘 하는 거냐"를 던져야 S4가 답으로 읽힙니다</dd></dl>
+        </div>
+        <p class="why"><b>반박 처리</b><span>허위·과장 광고(11건). 조회수 상위가 전부 "광고에 속지 마라"인 환경입니다. 그 의심을 인터뷰이가 대신 말해 줍니다.</span></p>
+      </div>
+    </article>
+
+    <article class="scene">
+      <div class="scene__hd">
+        <span class="scene__no">S4</span><span class="scene__tc">0:26–0:42</span>
+        <span class="scene__ttl">실제로 뭘 하는가</span><span class="scene__tag">최장 씬 · 16초</span>
+      </div>
+      <div class="scene__bd">
+        <div class="pane">
+          <dl class="f"><dt>화면</dt><dd>B롤 전환 — 저녁 식탁, 노트북 화면(정보 가림), 휴대폰으로 자료 보내는 손. 목소리는 계속</dd></dl>
+          <dl class="f"><dt>질문</dt><dd class="cap">하루에 얼마나 쓰세요?</dd></dl>
+          <dl class="f"><dt>대사</dt><dd class="say">"한 시간쯤이요. 저녁에 보장 분석해서 보내드리고, 주말에 한두 분 만나요. 저도 보험 하나도 몰랐는데, 교육이 그것부터 알려줘요."</dd></dl>
+        </div>
+        <div class="pane">
+          <dl class="f"><dt>자막</dt><dd class="cap">하루 1시간<br>저녁 · 주말</dd></dl>
+          <dl class="f"><dt>오디오</dt><dd>실내 앰비언스를 살짝 살림. 키보드·알림음 등 <strong>과장된 효과음 금지</strong></dd></dl>
+          <dl class="f"><dt>비고</dt><dd>화면에 <strong>명함·통장·현금·코인·사무실</strong> 노출 금지. LP 히어로 에셋 지침과 동일합니다</dd></dl>
+        </div>
+        <p class="why"><b>반박 처리</b><span>교육·시험 부담(48건, 1위). 건수가 가장 많은데도 브랜드 영상이 잘 다루지 않습니다. "몰랐는데 교육이 그것부터 알려준다"가 정면 답입니다.</span></p>
+      </div>
+    </article>
+
+    <article class="scene">
+      <div class="scene__hd">
+        <span class="scene__no">S5</span><span class="scene__tc">0:42–0:56</span>
+        <span class="scene__ttl">금액과 근거</span><span class="scene__tag" data-k="risk">심의 핵심 구간</span>
+      </div>
+      <div class="scene__bd">
+        <div class="pane">
+          <dl class="f"><dt>화면</dt><dd>인물 컷 복귀. 미디엄 클로즈업</dd></dl>
+          <dl class="f"><dt>질문</dt><dd class="cap">그래서 얼마 버세요?</dd></dl>
+          <dl class="f"><dt>대사</dt><dd class="say">"첫 달에 ○○○만원이요. 근데 이건 급여가 아니라 <strong>수수료</strong>라서, 계약마다 달라요."</dd></dl>
+        </div>
+        <div class="pane">
+          <dl class="f"><dt>자막</dt><dd class="cap"><strong>본문급 크기 · 4초 이상 노출</strong><br>인보험 2건 기준 · 계약 조건에 따라 차이<br>2026년 ○월 본인 정산 내역 기준</dd></dl>
+          <dl class="f"><dt>오디오</dt><dd>BGM 한 단계 낮춤. 숫자에 효과음 금지</dd></dl>
+          <dl class="f"><dt>비고</dt><dd>금액 그래픽은 <strong>화면 점유 30% 이하</strong>. 크게 띄우면 수입 보장 인상을 줍니다</dd></dl>
+        </div>
+        <p class="why"><b>반박 처리</b><span>인터뷰 영상 최다 추천 댓글(♡60)이 "급여라고 하시면 안 됩니다, 수수료라고 해야죠"였습니다. 인터뷰이 입으로 정정하게 하면 이 지적이 원천 차단됩니다.</span></p>
+      </div>
+    </article>
+
+    <article class="scene">
+      <div class="scene__hd">
+        <span class="scene__no">S6</span><span class="scene__tc">0:56–1:10</span>
+        <span class="scene__ttl">불리한 것 먼저</span><span class="scene__tag" data-k="open">이 콘티의 승부처</span>
+      </div>
+      <div class="scene__bd">
+        <div class="pane">
+          <dl class="f"><dt>화면</dt><dd>인물 컷 유지. 표정이 진지해지는 지점 — 컷 편집 없이 한 호흡으로</dd></dl>
+          <dl class="f"><dt>질문</dt><dd class="cap">안 좋았던 건 없어요?</dd></dl>
+          <dl class="f"><dt>대사</dt><dd class="say">"환수요. 고객이 일찍 해지하시면 받은 수수료를 돌려드려야 해요. 저는 미리 들어서 알았는데, 모르고 시작하면 당황하실 거예요."</dd></dl>
+        </div>
+        <div class="pane">
+          <dl class="f"><dt>자막</dt><dd class="cap">계약 유지 기간에 따라<br>수수료 환수가 발생합니다</dd></dl>
+          <dl class="f"><dt>오디오</dt><dd>BGM 최저. 말이 또렷하게 들리도록</dd></dl>
+          <dl class="f"><dt>비고</dt><dd>여기서 톤을 밝게 유지하면 역효과입니다. <strong>담담하게</strong> 가야 신뢰가 생깁니다</dd></dl>
+        </div>
+        <p class="why"><b>반박 처리</b><span>환수(19건). 브랜드 영상이 절대 안 하는 말입니다. 그래서 이걸 하면 나머지 89초의 신뢰도가 전부 올라갑니다. 어차피 상담에서 설명해야 하는 내용이라 리드 손실도 제한적입니다.</span></p>
+      </div>
+    </article>
+
+    <article class="scene">
+      <div class="scene__hd">
+        <span class="scene__no">S7</span><span class="scene__tc">1:10–1:22</span>
+        <span class="scene__ttl">지인영업 정면 답변</span><span class="scene__tag" data-k="risk">수미상관</span>
+      </div>
+      <div class="scene__bd">
+        <div class="pane">
+          <dl class="f"><dt>화면</dt><dd>S1과 <strong>동일한 앵글로 복귀</strong>. 시작과 끝을 붙입니다</dd></dl>
+          <dl class="f"><dt>질문</dt><dd class="cap">그래서, 지인한테 파셨어요?</dd></dl>
+          <dl class="f"><dt>대사</dt><dd class="say">"제 보험부터 봤어요. 그건 제 거니까요. 주변에 억지로 권하는 분위기였으면 저는 못 버텼을 것 같아요."</dd></dl>
+        </div>
+        <div class="pane">
+          <dl class="f"><dt>자막</dt><dd class="cap">없음</dd></dl>
+          <dl class="f"><dt>오디오</dt><dd>BGM 서서히 복귀</dd></dl>
+          <dl class="f"><dt>비고</dt><dd>자기계약 이슈를 숨기면 댓글에서 터집니다. "내 보험부터 봤다"로 <strong>인정하되 프레임을 바꿉니다</strong></dd></dl>
+        </div>
+        <p class="why"><b>반박 처리</b><span>지인영업(40) + 자기계약(3). S1에서 던진 문장을 여기서 받습니다. "합격 당일 저녁에 내 보험부터 챙기라는 문자가 왔다"는 폭로 댓글이 실재해, 회피하면 오히려 의심을 키웁니다.</span></p>
+      </div>
+    </article>
+
+    <article class="scene">
+      <div class="scene__hd">
+        <span class="scene__no">S8</span><span class="scene__tc">1:22–1:30</span>
+        <span class="scene__ttl">클로징</span><span class="scene__tag">CTA는 LP가 받음</span>
+      </div>
+      <div class="scene__bd">
+        <div class="pane">
+          <dl class="f"><dt>화면</dt><dd>인물 컷 → 마지막 1.5초에 자막 카드로 전환</dd></dl>
+          <dl class="f"><dt>대사</dt><dd class="say">"안 맞으면 그만두면 돼요. 들어가는 돈이 없으니까."</dd></dl>
+        </div>
+        <div class="pane">
+          <dl class="f"><dt>자막</dt><dd class="cap">교육비 0원 · 리스크 0원<br><br>삼성화재금융서비스 위촉 설계사<br>정규·비정규 직원 채용과 무관합니다</dd></dl>
+          <dl class="f"><dt>오디오</dt><dd>아웃트로 후 완전 정지</dd></dl>
+          <dl class="f"><dt>비고</dt><dd>영상 안에 <strong>버튼·CTA를 넣지 않습니다</strong>. LP의 플로팅 CTA가 그 역할을 합니다. 둘이 겹치면 양쪽 다 약해집니다</dd></dl>
+        </div>
+        <p class="why"><b>반박 처리</b><span>오래 못 감(17건). "1년 못 버틴다"는 반박에 "못 버텨도 손해가 없다"로 답합니다. LP의 S5(0원)와 같은 논리이고, 필수 고지도 여기서 소화합니다.</span></p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section>
+  <h2>용어 통제표 <em>terms</em></h2>
+  <p class="lede">대사·자막·썸네일 전부에 적용합니다. 촬영 현장에서 인터뷰이가 잘못 말하면 <strong>그 자리에서 다시 받습니다.</strong></p>
+  <div class="tw"><table>
+    <thead><tr><th>쓰면 안 되는 말</th><th>대신 쓸 말</th><th>이유</th></tr></thead>
+    <tbody>
+      <tr><td><del>급여 · 월급</del></td><td><ins>수수료</ins></td><td>위촉직은 근로소득이 아님. 최다 추천 댓글이 정확히 이 지점을 지적</td></tr>
+      <tr><td><del>연봉</del></td><td><ins>연간 수수료 합계</ins></td><td>같은 이유</td></tr>
+      <tr><td><del>채용 · 입사 · 직원</del></td><td><ins>위촉 · 활동 시작</ins></td><td>유의사항 DO 3 고용형태</td></tr>
+      <tr><td><del>보장됩니다 · 확정</del></td><td><ins>경우에 따라 다릅니다</ins></td><td>DO NOT 2 — 일정 수준 이상 수입 보장 금지</td></tr>
+      <tr><td><del>누구나 · 무조건 · 최대 · 최고</del></td><td><ins>(삭제)</ins></td><td>표시광고법 — 객관적 근거 없는 절대·비교 표현</td></tr>
+      <tr><td><del>부업이라 쉬워요</del></td><td><ins>본업과 병행할 수 있어요</ins></td><td>난이도 왜곡. 댓글의 "합법적인 사기" 반응을 부릅니다</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>포스터 프레임 <em>thumbnail</em></h2>
+  <div class="flag">
+    <b>현재 시안의 문구는 바꿔야 합니다</b>
+    <p>목업 썸네일이 <code>N잡 보험설계사들의 💰 실제 급여 공개</code>인데 <strong><code>급여</code>가 틀린 표현</strong>입니다. 위촉직은 수수료입니다. 업계에서 가장 먼저 잡아내는 지점이고(♡60 댓글), 심의에서는 고용형태 오인 문제가 됩니다. 또한 <code>1년차 설계사 실제 급여 공개!</code>(21분, 19,161뷰)가 이미 있어 차별점도 없습니다.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>안</th><th>문구</th><th>근거</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1안</strong> <span style="color:var(--good);font-weight:800">추천</span></td><td><span class="q">"지인한테 팔라고 할 줄 알았어요"</span></td><td>S1 대사 그대로. 최대 반발을 제목에 걸어 궁금증을 만들고, 금액 표현이 없어 심의 부담이 없습니다</td></tr>
+      <tr><td><strong>2안</strong></td><td><span class="q">"환수부터 말씀드릴게요"</span></td><td>불리한 정보를 제목에 겁니다. 신뢰는 가장 높지만 재생률은 1안보다 낮습니다</td></tr>
+      <tr><td><strong>3안</strong></td><td><span class="q">"첫 달 수수료, 그대로 보여드릴게요"</span></td><td>금액 방향 유지. <code>급여</code>를 <code>수수료</code>로 교정한 최소 수정안입니다</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note"><b>재생 전 정지 화면에는 인물이 보여야 합니다.</b> LP에 임베드된 영상은 유튜브 검색을 거치지 않으므로, 자극적인 썸네일보다 <strong>"진짜 사람이 말한다"는 신호</strong>가 재생률을 올립니다. 텍스트는 화면 폭의 절반을 넘기지 마세요.</p>
+</section>
+
+<section>
+  <h2>촬영 전 확인 <em>pre-production</em></h2>
+
+  <h3>필수</h3>
+  <ul class="checks">
+    <li><b>출연 동의서</b> — 초상권, 사용 범위(LP·유튜브·SNS), 사용 기간, 해촉 후 처리 방법까지 명시</li>
+    <li><b>정산 내역 원본 확보</b> — 금액을 말하는 이상 근거 자료가 있어야 합니다. 화면에 띄우지 않더라도 심의 제출용으로 필요합니다</li>
+    <li><b>준법 사전심의</b> — 금액이 들어가므로 업무광고입니다. 콘티 단계에서 한 번, 편집본으로 한 번 받으시길 권합니다</li>
+    <li><b>인터뷰이 사전 브리핑</b> — 용어 통제표를 미리 전달. 현장에서 <code>월급</code>이 나오면 재촬영입니다</li>
+  </ul>
+
+  <h3>화면 금지 요소</h3>
+  <ul class="checks">
+    <li><b>명함 · 통장 · 현금 · 코인 · 사무실 전경</b> — LP 히어로 에셋 지침과 동일합니다. 돈 이미지가 붙으면 "돈 벌게 해준다"는 광고로 읽힙니다</li>
+    <li><b>고객 정보</b> — 노트북·휴대폰 화면은 전부 블러 또는 더미 데이터로 대체</li>
+    <li><b>타사 로고 · 상품명</b> — 비교광고 소지</li>
+    <li><b>과장된 리액션 효과음 · 자막 애니메이션</b> — 예능 톤이 되면 S6의 진정성이 무너집니다</li>
+  </ul>
+
+  <h3>자막 규격</h3>
+  <p class="note">LP 디자인 시스템과 맞춥니다. 서체 <b>Pretendard</b>, 강조 <b>#0C4DA2</b>, 자막 박스 <b>#F2F6FD</b>. 근거 자막(S5)은 <b>본문급 크기</b>로 넣고 다른 자막보다 작게 만들지 마세요 — 유의사항 DO 4의 취지가 그렇습니다. 모바일 재생을 고려해 자막은 <b>화면 하단 15% 안쪽</b>에 두지 않습니다(재생 컨트롤에 가립니다).</p>
+</section>
+
+<section>
+  <h2>결정이 필요한 것 <em>open</em></h2>
+  <div class="flags">
+    <div class="flag">
+      <b>1. S6(환수)을 넣을지</b>
+      <p>이 콘티에서 가장 큰 결정입니다. 넣으면 신뢰가 오르지만 <strong>일부 방문자는 여기서 이탈합니다.</strong> 다만 그 사람들은 상담 3분 안에 같은 설명을 듣고 어차피 이탈합니다. 리드 <em>수</em>는 줄고 리드 <em>질</em>은 오릅니다. 지금이 리드 볼륨을 확보해야 하는 국면이라면 뺄 수도 있습니다.</p>
+    </div>
+    <div class="flag">
+      <b>2. 인터뷰이 인원</b>
+      <p>현재 콘티는 <strong>1명 90초</strong> 기준입니다. LP 목업의 "N잡 보험설계사<strong>들</strong>"처럼 여러 명을 쓰면 씬당 시간이 쪼개져 S6 같은 긴 답변이 불가능해집니다. 여러 명이 필요하면 <strong>90초 × N편</strong>으로 만들어 LP에서 탭으로 전환하는 편이 낫습니다.</p>
+    </div>
+    <div class="flag">
+      <b>3. 금액 자릿수 정합</b>
+      <p>S5의 <code>○○○만원</code>은 실제 정산 내역이 나와야 확정됩니다. LP 히어로의 <code>+220만원</code>과 <strong>다른 숫자가 나오면 둘 다 의심받습니다.</strong> 촬영 전에 히어로 숫자와 맞춰 두셔야 합니다.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>리서치 원본: 유튜브 검색 8개 쿼리, 고유 영상 87편 메타데이터, 한국어 자동자막 4편, 상위 댓글 241개. 수집일 2026-08-04. 내부 검토용이며 준법 사전심의 전 단계입니다.</p>
+</footer>
+
+</div>
+</body>
+</html>
