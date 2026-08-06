@@ -82,7 +82,7 @@ h3{font-size:14.5px;font-weight:800;color:var(--ink);margin-top:.4rem;letter-spa
 /* 아크 바 */
 .arc{display:grid;gap:.35rem;grid-template-columns:repeat(2,1fr)}
 @media (min-width:640px){.arc{grid-template-columns:repeat(4,1fr)}}
-@media (min-width:900px){.arc{grid-template-columns:repeat(8,1fr)}}
+@media (min-width:900px){.arc{grid-template-columns:repeat(9,1fr)}}
 .arc div{
   border:1px solid var(--line);border-radius:9px;background:var(--card);
   padding:.55rem .6rem;display:grid;gap:.1rem;text-align:center;
@@ -150,7 +150,7 @@ footer{padding-top:1.4rem;border-top:1px solid var(--line);font-size:12px;color:
 
 <header class="masthead">
   <p class="kicker">삼성화재금융서비스 · 점검본부 · v2</p>
-  <h1>영상 인터뷰 콘티<br>후기형 100초</h1>
+  <h1>영상 인터뷰 콘티<br>후기형 115초</h1>
   <p>v1의 다큐형 Q&amp;A를 <b>후기 문법으로 전면 재설계</b>했습니다. 같은 반박을 다루되, 회사가 해명하지 않고 <b>화자가 "나도 그게 제일 걱정이었는데"로 말합니다.</b> 정보량은 같지만 방어가 아니라 공감으로 읽힙니다.</p>
   <p class="crumbs">
     <a href="index.html">← 시안 목록</a>
@@ -174,8 +174,8 @@ footer{padding-top:1.4rem;border-top:1px solid var(--line);font-size:12px;color:
 
 <dl class="facts">
   <div class="fact"><dt>구조</dt><dd>후기형<span>Before → After</span></dd></div>
-  <div class="fact"><dt>길이</dt><dd>100<span>초</span></dd></div>
-  <div class="fact"><dt>씬</dt><dd>8<span>개</span></dd></div>
+  <div class="fact"><dt>길이</dt><dd>115<span>초</span></dd></div>
+  <div class="fact"><dt>씬</dt><dd>9<span>개</span></dd></div>
   <div class="fact"><dt>금액</dt><dd>노출<span>근거 자막 필수</span></dd></div>
 </dl>
 
@@ -189,10 +189,11 @@ footer{padding-top:1.4rem;border-top:1px solid var(--line);font-size:12px;color:
       <tr><td><strong>반박 처리</strong></td><td>"이런 문제가 있습니다"</td><td><strong>"제가 그게 제일 걱정이었는데 아니더라"</strong></td></tr>
       <tr><td><strong>환수 고백</strong></td><td>S6에 14초 배정</td><td><del>삭제</del> — 상담 스크립트로 이관</td></tr>
       <tr><td><strong>정서 곡선</strong></td><td>평탄 (정보 전달)</td><td><strong>결핍 → 계기 → 불안 → 해소 → 변화</strong></td></tr>
-      <tr><td><strong>클로징</strong></td><td>"안 맞으면 그만두면 돼요"</td><td><strong>"저는 잃을 게 없었어요"</strong> — 1인칭 권유</td></tr>
+      <tr><td><strong>클로징</strong></td><td>"안 맞으면 그만두면 돼요"<br><span style="color:var(--mute)">회고형 · 영상 내 CTA 없음</span></td><td><strong>"상담만 한번 받아보세요"</strong><br><span style="color:var(--mute)">권유형 · CTA 엔드카드 3초</span></td></tr>
+      <tr><td><strong>장점</strong></td><td>씬마다 흩어짐</td><td><strong>S8에 4연타로 몰아치기</strong> — 자막 4연속 + 경험 비교</td></tr>
     </tbody>
   </table></div>
-  <p class="note"><b>길이가 90초에서 100초로 늘었습니다.</b> 후기는 Before가 서야 After가 작동합니다. v1은 Before가 없어 90초로 충분했지만, 이 구조는 결핍 구간(S2)에 13초를 써야 뒤가 삽니다. 여기를 줄이면 "그래서 얼마 번대?"만 남는 광고가 됩니다.</p>
+  <p class="note"><b>길이가 90초에서 115초로 늘었습니다.</b> 후기는 Before가 서야 After가 작동합니다. 결핍 구간(S2)에 13초를 쓰지 않으면 "그래서 얼마 번대?"만 남는 광고가 되고, 장점 정리(S8)와 권유(S9)에 25초를 쓰지 않으면 <b>다 보고도 아무것도 안 하고 나갑니다.</b> 더 줄여야 한다면 S2가 아니라 S5·S6에서 각 2초씩 깎으세요.</p>
 </section>
 
 <section>
@@ -205,13 +206,14 @@ footer{padding-top:1.4rem;border-top:1px solid var(--line);font-size:12px;color:
     <div><b>S5</b><span>불안 ②<br>어려움</span></div>
     <div><b>S6</b><span>일상<br>변화</span></div>
     <div><b>S7</b><span>결과<br>금액</span></div>
-    <div><b>S8</b><span>권유<br>클로징</span></div>
+    <div><b>S8</b><span>장점<br>4연타</span></div>
+    <div><b>S9</b><span>권유<br>CTA</span></div>
   </div>
-  <p class="lede">S1이 결과를 먼저 보여주고, S2가 곧바로 바닥으로 떨어뜨립니다. 이 낙차가 후기의 동력입니다. S4·S5에서 불안을 두 번 올렸다 내린 뒤, S7에서 S1의 결과를 근거와 함께 되받습니다.</p>
+  <p class="lede">S1이 결과를 먼저 보여주고, S2가 곧바로 바닥으로 떨어뜨립니다. 이 낙차가 후기의 동력입니다. S4·S5에서 불안을 두 번 올렸다 내린 뒤 S7에서 S1의 결과를 근거와 함께 되받고, <b>S8에서 리듬을 최고조로 올린 상태로 S9의 권유에 넘깁니다.</b> 감정이 가장 높은 지점에서 요구해야 행동이 나옵니다.</p>
 </section>
 
 <section>
-  <h2>콘티 <em>100s · 8 scenes</em></h2>
+  <h2>콘티 <em>115s · 9 scenes</em></h2>
   <div class="scenes">
 
     <article class="scene">
@@ -298,7 +300,7 @@ footer{padding-top:1.4rem;border-top:1px solid var(--line);font-size:12px;color:
       <div class="scene__bd">
         <div class="pane">
           <dl class="f"><dt>화면</dt><dd>B롤 — 퇴근 후 노트북 강의 화면(정보 가림), 필기하는 손, 침대 위 태블릿</dd></dl>
-          <dl class="f"><dt>대사</dt><dd class="say">"저 보험 진짜 1도 몰랐어요. 근데 교육이 그것부터 알려주더라고요. 시험도 퇴근하고 한 달쯤 공부해서 붙었고요. 저 공부 잘하는 편도 아닌데."</dd></dl>
+          <dl class="f"><dt>대사</dt><dd class="say">"저 보험 진짜 1도 몰랐어요. 근데 교육을 회사에서 다 해줘요, 그것도 공짜로. 시험도 퇴근하고 한 달쯤 공부해서 붙었고요. 저 공부 잘하는 편도 아닌데."</dd></dl>
         </div>
         <div class="pane">
           <dl class="f"><dt>자막</dt><dd class="cap">교육 이수 · 자격 취득</dd></dl>
@@ -317,7 +319,7 @@ footer{padding-top:1.4rem;border-top:1px solid var(--line);font-size:12px;color:
       <div class="scene__bd">
         <div class="pane">
           <dl class="f"><dt>화면</dt><dd>B롤 중심 — 저녁 침대에서 휴대폰, 주말 카페에서 고객 응대(상대는 뒷모습·모자이크). 목소리는 계속</dd></dl>
-          <dl class="f"><dt>대사</dt><dd class="say">"퇴근하고 한 시간이요. 침대에 누워서 폰으로 해요. 주말에 한두 분 만나고요. 회사는 그대로 다니고 있어요, 아무도 몰라요."</dd></dl>
+          <dl class="f"><dt>대사</dt><dd class="say">"퇴근하고 한 시간이요. 침대에 누워서 폰으로 해요. 몇 시에 할지도 제가 정하고요. 주말에 한두 분 만나고, 회사는 그대로 다니고 있어요."</dd></dl>
         </div>
         <div class="pane">
           <dl class="f"><dt>자막</dt><dd class="cap">하루 1시간 · 본업 유지</dd></dl>
@@ -349,24 +351,45 @@ footer{padding-top:1.4rem;border-top:1px solid var(--line);font-size:12px;color:
 
     <article class="scene">
       <div class="scene__hd">
-        <span class="scene__no">S8</span><span class="scene__tc">1:30–1:40</span>
-        <span class="scene__ttl">권유 · 클로징</span><span class="scene__tag">CTA는 LP가 받음</span>
+        <span class="scene__no">S8</span><span class="scene__tc">1:30–1:42</span>
+        <span class="scene__ttl">장점 4연타</span><span class="scene__tag" data-k="open">리듬 구간 · 신설</span>
       </div>
       <div class="scene__bd">
         <div class="pane">
-          <dl class="f"><dt>화면</dt><dd>인물 컷 → 마지막 1.5초에 자막 카드</dd></dl>
-          <dl class="f"><dt>대사</dt><dd class="say">"저는 잃을 게 없었어요. 돈 들어가는 것도 아니고, 안 맞으면 안 하면 되니까. 그래서 그냥 해봤어요."</dd></dl>
+          <dl class="f"><dt>화면</dt><dd><strong>빠른 컷 4개 · 각 3초 고정.</strong> ① 아침에 안 나가고 늦잠 ② 회사 출근길(평범하게) ③ 밤 11시 침대에서 폰 ④ 카페에서 노트북. 목소리는 계속 이어짐</dd></dl>
+          <dl class="f"><dt>대사</dt><dd class="say">"출근을 안 해도 되고, 회사도 그대로 다니고, 몇 시에 할지도 제가 정하고요. 저 배달도 해보고 카페 알바도 해봤는데, 시간 대비로는 이게 제일 나았어요."</dd></dl>
         </div>
         <div class="pane">
-          <dl class="f"><dt>자막</dt><dd class="cap">교육비 0원 · 초기 비용 0원<br><br>삼성화재금융서비스 위촉 설계사<br>정규·비정규 직원 채용과 무관합니다</dd></dl>
-          <dl class="f"><dt>오디오</dt><dd>아웃트로 후 정지</dd></dl>
-          <dl class="f"><dt>비고</dt><dd>영상 안에 <strong>버튼·CTA를 넣지 않습니다.</strong> LP의 플로팅 CTA가 받습니다</dd></dl>
+          <dl class="f"><dt>자막</dt><dd class="cap"><strong>3초 간격 4연속 · 컷과 동기화</strong><br>① 출퇴근 없음<br>② 본업 그대로<br>③ 시간은 내가 정함<br>④ 시간 대비 수익</dd></dl>
+          <dl class="f"><dt>오디오</dt><dd>BGM 템포 최고조. 컷 전환에 가벼운 스와이프음 정도만</dd></dl>
+          <dl class="f"><dt>비고</dt><dd>비교는 <strong>"타 부업 대비"라는 일반 주장으로 쓰지 않습니다.</strong> 화자가 실제로 해본 것(배달·카페)과의 경험 비교로만 씁니다</dd></dl>
         </div>
-        <p class="why"><b>후기 문법</b><span>"해보세요"라고 권하지 않고 <strong>"저는 그냥 해봤어요"</strong>로 끝냅니다. 권유형은 광고로, 회고형은 후기로 읽힙니다. 사회초년생에게 "잃을 게 없다"가 가장 강한 논리이고, 필수 고지도 여기서 소화합니다.</span></p>
+        <p class="why"><b>장점 집중</b><span>흩어져 있던 장점을 한 지점에 모읍니다. 앞의 88초가 정서로 갔다면 여기는 리듬으로 갑니다 — 컷·자막·BGM이 동시에 빨라지며 <strong>클로징 직전에 각성 지점</strong>을 만듭니다. 일반 비교 주장은 표시광고법상 객관적 근거자료를 요구받지만 본인 경험 진술은 그 대상이 아니고, 구체적이라 설득력도 더 셉니다.</span></p>
+      </div>
+    </article>
+
+    <article class="scene">
+      <div class="scene__hd">
+        <span class="scene__no">S9</span><span class="scene__tc">1:42–1:55</span>
+        <span class="scene__ttl">권유 · CTA 엔드카드</span><span class="scene__tag" data-k="open">유일한 정면 응시</span>
+      </div>
+      <div class="scene__bd">
+        <div class="pane">
+          <dl class="f"><dt>화면</dt><dd>인물 컷. <strong>처음으로 카메라를 정면으로 봅니다.</strong> 앞의 102초는 인터뷰어를 향해 말했고, 여기서만 시청자를 봅니다. 마지막 3초에 CTA 엔드카드</dd></dl>
+          <dl class="f"><dt>대사</dt><dd class="say">"1년 전에 저도 그냥 주말에 누워만 있었거든요. 그때 상담이라도 받아봤으면 좋았을 텐데 싶어요.<br><br>고민되시면 상담만 한번 받아보세요. <strong>진짜 그것만 해보셔도 돼요.</strong>"</dd></dl>
+        </div>
+        <div class="pane">
+          <dl class="f"><dt>자막</dt><dd class="cap">상담받아도 시작 의무 없음<br>1분 · 교육비 0원</dd></dl>
+          <dl class="f"><dt>엔드카드</dt><dd class="cap"><strong>1분 만에 N잡메이트 시작하기</strong><br>↓ 아래 버튼에서 신청<br><br>삼성화재금융서비스 위촉 설계사<br>정규·비정규 직원 채용과 무관합니다</dd></dl>
+          <dl class="f"><dt>오디오</dt><dd>대사 구간 BGM 최저 → 엔드카드에서 아웃트로</dd></dl>
+        </div>
+        <p class="why"><b>권유 설계</b><span>"하세요"는 광고로 읽힙니다. <strong>"1년 전의 나"</strong>는 여전히 1인칭이면서 기능은 권유라 저항이 훨씬 적습니다. 그리고 요구를 <strong>위촉이 아니라 상담으로 낮춥니다</strong> — 심리적 비용이 거의 없고 LP의 CTA와도 정확히 같은 행동입니다. 정면 응시 전환이 이 씬을 권유로 만드는 장치입니다.</span></p>
       </div>
     </article>
 
   </div>
+
+  <p class="note"><b>CTA 엔드카드 규격.</b> 문구는 LP 플로팅 CTA와 <b>글자 그대로 동일</b>해야 합니다 — 다르면 시청자가 두 개의 다른 행동으로 인식합니다. 색과 모서리도 LP 버튼과 같게(<code>#0C4DA2</code> 바탕, 흰 글자, 모서리 14px) 맞추세요. <b>영상 안의 CTA는 클릭되지 않습니다.</b> 유튜브 임베드라 버튼처럼 보여도 눌리지 않으므로, <b>아래를 가리키는 화살표를 넣어 LP의 실제 버튼으로 시선을 넘기세요.</b> 이걸 빼면 시청자가 영상 위를 클릭하다 이탈합니다.</p>
 </section>
 
 <section>
